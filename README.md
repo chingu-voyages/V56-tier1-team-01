@@ -35,7 +35,7 @@ your repo access and to practice PR'ing with your team _before_ you start
 coding!
 
 - Sarah: [GitHub](https://github.com/sarahlibx) / [LinkedIn](https://www.linkedin.com/in/sarahsmithdeveloper/)
-- Shayla: [GitHub](https://github.com/shayla-develops-webs) / [LinkedIn](https://www.linkedin.com/in/shaylamrodgers/)
+- Shayla R.: [GitHub](https://github.com/shayla-develops-webs) / [LinkedIn](https://www.linkedin.com/in/shaylamrodgers/)
 
   ...
 
