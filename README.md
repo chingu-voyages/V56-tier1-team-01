@@ -11,8 +11,6 @@ written by an experienced Chingu, be your starting point -
 And before we go there's "one more thing"! Once you decide what to include
 in your `readme` feel free to replace the text we've provided here.
 
-Vangi - testing.
-
 > Own it & Make it your Own!
 
 ## Team Documents
@@ -39,6 +37,7 @@ coding!
 - Sarah: [GitHub](https://github.com/sarahlibx) / [LinkedIn](https://www.linkedin.com/in/sarahsmithdeveloper/)
 - Conor: [GitHub](https://github.com/conorwburke) / [LinkedIn](https://www.linkedin.com/in/conor-burke-phd-725756231/)
 - Shayla R.: [GitHub](https://github.com/shayla-develops-webs) / [LinkedIn](https://www.linkedin.com/in/shaylamrodgers/)
+- Jehovangi P [Github](https://github.com/jp249)
 - 
    ...
    
