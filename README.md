@@ -39,7 +39,7 @@ coding!
 - Sarah: [GitHub](https://github.com/sarahlibx) / [LinkedIn](https://www.linkedin.com/in/sarahsmithdeveloper/)
 - Conor: [GitHub](https://github.com/conorwburke) / [LinkedIn](https://www.linkedin.com/in/conor-burke-phd-725756231/)
 - Shayla R.: [GitHub](https://github.com/shayla-develops-webs) / [LinkedIn](https://www.linkedin.com/in/shaylamrodgers/)
-- 
+- Francisco: [GitHub](https://github.com/fcuevas6) / [LinkedIn](https://www.linkedin.com/in/francisco-cuevas-designer/)
    ...
-   
+
 - Teammate name #n: [GitHub](https://github.com/ghaccountname) / [LinkedIn](https://linkedin.com/in/liaccountname)
