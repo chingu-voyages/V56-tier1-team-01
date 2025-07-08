@@ -35,7 +35,7 @@ your repo access and to practice PR'ing with your team *before* you start
 coding!
 
 - Sarah: [GitHub](https://github.com/sarahlibx) / [LinkedIn](https://www.linkedin.com/in/sarahsmithdeveloper/)
-- Teammate name #2: [GitHub](https://github.com/ghaccountname) / [LinkedIn](https://linkedin.com/in/liaccountname)
-
+- Conor: [GitHub](https://github.com/conorwburke) / [LinkedIn](https://www.linkedin.com/in/conor-burke-phd-725756231/)
+- 
    ...
 - Teammate name #n: [GitHub](https://github.com/ghaccountname) / [LinkedIn](https://linkedin.com/in/liaccountname)
