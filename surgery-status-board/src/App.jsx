@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import './App.css'
+import './index.css'
 import LandingPage from './pages/LandingPage.jsx'
 import PatientInformation from './pages/PatientInformation.jsx'
 import PatientStatusUpdate from './pages/PatientStatusUpdate.jsx'
