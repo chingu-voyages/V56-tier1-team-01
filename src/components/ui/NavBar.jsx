@@ -8,7 +8,7 @@ import {
 
 export default function NavBar() {
   return (
-    <nav className="flex items-center justify-between px-6 py-3 border-b bg-white">
+    <nav className="flex flex-col md:flex-row items-center justify-between px-6 py-3 border-b bg-white">
       <h1 className="text-lg font-bold text-gray-900">Surgery Status Board</h1>
       <NavigationMenu>
         <NavigationMenuList className="flex space-x-6">
