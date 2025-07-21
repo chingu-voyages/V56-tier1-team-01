@@ -305,6 +305,8 @@ export default function PatientForm() {
         <h3 className='text-lg font-semibold mb-4 text-center'>
           Current patients in the system:
         </h3>
+        <p className='text-center text-gray-500 mb-4'> TESTING ONLY</p>
+
         {Object.keys(patients).length === 0 ? (
           <p className='text-center text-gray-500'>
             No patients in the system yet. Fill out the form and click submit to
@@ -324,7 +326,9 @@ export default function PatientForm() {
                 <p>Email: {patient.email} </p>
                 <p>Phone: {patient.phone}</p>
                 <p className='text-green-600 font-medium mt-2'>
-                  If you see this, Context + useState is working!!
+                  If you see this, Context + useState is working!! This part of
+                  the form will NOT be in the production version. It is just for
+                  testing purposes.
                 </p>
               </div>
             ))}
