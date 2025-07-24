@@ -1,0 +1,67 @@
+import React from "react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+
+const credentials = [
+    {
+        username: "admin@hospital.com",
+        password: "Admin411",
+        access: "admin"
+    },
+    {
+        username: "team@hospital.com",
+        password: "Team123",
+        access: "team"
+    }
+]
+
+export default function LoginForm() {
+    const [username, setUsername] = React.useState("");
+    const [password, setPassword] = React.useState("");
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        onLogin(username, password)
+    }
+
+    return (
+        <main className="min-h-screen flex flex-col items-center justify-center">
+            <section className="max-w-xl w-full text-center border border-gray-200 p-8 rounded-lg shadow-md sm:p-10">
+                <p className="max-w-sm m-auto pt-10 pb-12">
+                    To enter a new patient into this system or to update 
+                    the status of an existing patient please enter your 
+                    authentication information below. 
+                </p>
+                <form 
+                    className="max-w-sm m-auto"
+                    onSubmit={handleSubmit}
+                >
+                    <Label>Username:</Label>
+                    <Input
+                        className="mb-6"
+                        placeholder="Username"
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                        />
+                    <Label>Password:</Label>
+                    <Input
+                        type="text"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                    <Button className="mt-8" type="submit">Authorize Login</Button>
+                </form>
+
+                <p className="text-sm text-gray-500 mt-8">Looking for the status of a loved one?</p>
+                <p className="text-sm text-gray-500">Click <a className="underline" href="/patient-status">here</a> to view the patient status board.</p>
+             </section>
+        </main>
+
+
+    )
+}

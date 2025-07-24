@@ -6,6 +6,7 @@ import PatientInformation from "./pages/PatientInformation.jsx";
 import PatientStatusUpdate from "./pages/PatientStatusUpdate.jsx";
 import PatientStatus from "./pages/PatientStatus.jsx";
 import NavBar from "./components/ui/navbar.jsx";
+import LoginForm from "./pages/LoginForm";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<LoginForm />} />
         <Route path="/patient-information" element={<PatientInformation />} />
         <Route
           path="/patient-status-update"
