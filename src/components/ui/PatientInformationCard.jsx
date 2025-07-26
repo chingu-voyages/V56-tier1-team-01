@@ -3,12 +3,12 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 
 export default function PatientInformationCard({ patient }) {
+  // Ensure patient data is available and provide defaults
   const displayPatient = {
     firstName: patient.firstName || "N/A",
     lastName: patient.lastName || "N/A",
@@ -23,9 +23,12 @@ export default function PatientInformationCard({ patient }) {
     <Card>
       <CardHeader>
         <CardTitle>Patient Information</CardTitle>
-        <CardDescription>Card Description</CardDescription>
+        <CardDescription>
+          Quickly view key patient details to support timely updates and
+          decisions
+        </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex flex-col items-center text-left">
         <p>
           Patient: {displayPatient.firstname} {displayPatient.lastName}
         </p>
@@ -34,9 +37,6 @@ export default function PatientInformationCard({ patient }) {
         <p>Telephone: {displayPatient.telephone}</p>
         <p>Status: {displayPatient.status}</p>
       </CardContent>
-      <CardFooter>
-        <p>Card Footer</p>
-      </CardFooter>
     </Card>
   );
 }
