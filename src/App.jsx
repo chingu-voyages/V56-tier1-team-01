@@ -6,6 +6,7 @@ import PatientInfoPage from "./pages/PatientInfoPage.jsx";
 import PatientStatusUpdate from "./pages/PatientStatusUpdate.jsx";
 import PatientStatus from "./pages/PatientStatus.jsx";
 import NavBar from "./components/ui/navbar.jsx";
+import AdminHome from "./pages/AdminHome.jsx"
 import { PatientProvider } from "./context/PatientProvider";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
             element={<PatientStatusUpdate />}
           />
           <Route path="/patient-status" element={<PatientStatus />} />
+          <Route path="/admin-home" element={<AdminHome />} />
         </Routes>
       </BrowserRouter>
     </PatientProvider>
