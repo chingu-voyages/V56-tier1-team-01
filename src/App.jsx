@@ -2,26 +2,30 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 import LandingPage from "./pages/LandingPage.jsx";
-import PatientInformation from "./pages/PatientInformation.jsx";
+import PatientInfoPage from "./pages/PatientInfoPage.jsx";
 import PatientStatusUpdate from "./pages/PatientStatusUpdate.jsx";
 import PatientStatus from "./pages/PatientStatus.jsx";
-import NavBar from "./components/ui/navbar.jsx";
+import STMHome from "./pages/STMHome.jsx";
+import NavBar from "./components/layout/NavBar.jsx";
+import { PatientProvider } from "./context/PatientProvider";
 
 function App() {
   return (
-    <BrowserRouter>
-      <NavBar />
-
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/patient-information" element={<PatientInformation />} />
-        <Route
-          path="/patient-status-update"
-          element={<PatientStatusUpdate />}
-        />
-        <Route path="/patient-status" element={<PatientStatus />} />
-      </Routes>
-    </BrowserRouter>
+    <PatientProvider>
+      <BrowserRouter>
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/patient-information" element={<PatientInfoPage />} />
+          <Route
+            path="/patient-status-update"
+            element={<PatientStatusUpdate />}
+          />
+          <Route path="/patient-status" element={<PatientStatus />} />
+          <Route path="/stm-home" element={<STMHome />} />
+        </Routes>
+      </BrowserRouter>
+    </PatientProvider>
   );
 }
 
