@@ -14,7 +14,7 @@ const patient = {
 };
 export default function PatientStatusUpdate() {
   return (
-    <div>
+    <div className="px-4 sm:px-6 md:px-8">
       <h1 className="text-2xl font-bold text-gray-900 text-center mt-16 mb-8">
         Patient Status Update
       </h1>
@@ -30,9 +30,7 @@ export default function PatientStatusUpdate() {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
         <div>
-          <div>
-            <PatientInformationCard patient={patient} />
-          </div>
+          <PatientInformationCard patient={patient} />
         </div>
         <div>
           <div className="flex flex-initial flex-col space-y-4">
