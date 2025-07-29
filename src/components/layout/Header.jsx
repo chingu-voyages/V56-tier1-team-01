@@ -16,7 +16,7 @@ import { X } from "lucide-react";
 
 // Add mobile navigation and resposive design
 
-export default function NavBar() {
+export default function Header() {
   return (
     <nav className="flex items-center justify-between px-6 py-3 border-b bg-white shadow-sm transition-all duration-300">
       <h1 className="text-lg font-bold text-gray-900 transform hover:scale-105 transition-transform duration-200 cursor-default">

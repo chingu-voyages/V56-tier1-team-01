@@ -6,14 +6,14 @@ import PatientInfoPage from "./pages/PatientInfoPage.jsx";
 import PatientStatusUpdate from "./pages/PatientStatusUpdate.jsx";
 import PatientStatus from "./pages/PatientStatus.jsx";
 import STMHome from "./pages/STMHome.jsx";
-import NavBar from "./components/layout/NavBar.jsx";
+import Header from "./components/layout/Header.jsx";
 import { PatientProvider } from "./context/PatientProvider";
 
 function App() {
   return (
     <PatientProvider>
       <BrowserRouter>
-        <NavBar />
+        <Header />
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/patient-information" element={<PatientInfoPage />} />
