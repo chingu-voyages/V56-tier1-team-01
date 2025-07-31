@@ -14,7 +14,7 @@ export default function LandingPage() {
        
         <div className="flex justify-around mt-6">
           <Link to="/patient-status"><Button size="lg" variant="outline">Enter as Guest</Button></Link>
-          <Link to=""><Button size="lg">Authorized Login</Button></Link>
+          <Link to="/login"><Button size="lg">Authorized Login</Button></Link>
         </div>
       </section>
     </main>

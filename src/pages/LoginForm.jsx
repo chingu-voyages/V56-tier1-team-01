@@ -2,6 +2,8 @@ import React from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { useAuth } from "../AuthProvider";
+import { Link } from "react-router-dom";
 
 const credentials = [
     {
@@ -19,6 +21,22 @@ const credentials = [
 export default function LoginForm() {
     const [username, setUsername] = React.useState("");
     const [password, setPassword] = React.useState("");
+
+    const { login, isAuthenticated } = useAuth();
+
+    function onLogin(submittedUsername, submittedPassword) {
+        const userFound = credentials.find(credential =>
+            credential.username === submittedUsername && credential.password === submittedPassword
+        )
+        console.log(credential)
+        if (userFound) {
+            login()
+            console.log(isAuthenticated)
+        } else {
+            alert("Invalid credentials")
+            console.log("Error: Invalid credentials")
+        }
+    }
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -54,7 +72,9 @@ export default function LoginForm() {
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
-                    <Button className="mt-8" type="submit">Authorize Login</Button>
+                    <Link to= { isAuthenticated ? "/patient-information" : "/login" }>
+                        <Button className="mt-8" type="submit">Authorize Login</Button>
+                    </Link>
                 </form>
 
                 <p className="text-sm text-gray-500 mt-8">Looking for the status of a loved one?</p>
