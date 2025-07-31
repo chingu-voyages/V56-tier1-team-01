@@ -5,7 +5,7 @@ import LandingPage from "./pages/LandingPage.jsx";
 import PatientInfoPage from "./pages/PatientInfoPage.jsx";
 import PatientStatusUpdate from "./pages/PatientStatusUpdate.jsx";
 import PatientStatus from "./pages/PatientStatus.jsx";
-import NavBar from "./components/ui/navbar.jsx";
+import NavBar from "./components/ui/NavBar.jsx";
 import { PatientProvider } from "./context/PatientProvider";
 
 function App() {
