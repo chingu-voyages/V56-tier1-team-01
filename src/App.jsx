@@ -5,7 +5,6 @@ import LandingPage from "./pages/LandingPage.jsx";
 import PatientInfoPage from "./pages/PatientInfoPage.jsx";
 import PatientStatusUpdate from "./pages/PatientStatusUpdate.jsx";
 import PatientStatus from "./pages/PatientStatus.jsx";
-import NavBar from "./components/ui/navbar.jsx";
 import LoginForm from "./pages/LoginForm";
 import { AuthProvider } from "./AuthProvider";
 import ProtectedRoute from "./ProtectedRoute";
