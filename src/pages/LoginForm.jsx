@@ -1,9 +1,9 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "../AuthProvider";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const credentials = [
     {
@@ -19,29 +19,41 @@ const credentials = [
 ]
 
 export default function LoginForm() {
-    const [username, setUsername] = React.useState("");
-    const [password, setPassword] = React.useState("");
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
 
-    const { login, isAuthenticated } = useAuth();
+    const { login, isAuthenticated, userAccess, setUserAccess } = useAuth();
+    const navigate = useNavigate();
 
     function onLogin(submittedUsername, submittedPassword) {
         const userFound = credentials.find(credential =>
             credential.username === submittedUsername && credential.password === submittedPassword
         )
-        console.log(credential)
-        if (userFound) {
-            login()
-            console.log(isAuthenticated)
-        } else {
-            alert("Invalid credentials")
-            console.log("Error: Invalid credentials")
+
+        if (!userFound) {
+            alert("Invalid username or password");
+            return
         }
+
+        setUserAccess(userFound.access)
+        login()
     }
+
 
     function handleSubmit(e) {
         e.preventDefault();
         onLogin(username, password)
     }
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            if (userAccess === "admin") {
+                navigate("/patient-information")
+            } else if (userAccess == "team") {
+                navigate("/patient-status-update")
+            }
+        }
+    }, [isAuthenticated, userAccess, navigate])
 
     return (
         <main className="min-h-screen flex flex-col items-center justify-center">
@@ -72,9 +84,7 @@ export default function LoginForm() {
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
-                    <Link to= { isAuthenticated ? "/patient-information" : "/login" }>
-                        <Button className="mt-8" type="submit">Authorize Login</Button>
-                    </Link>
+                    <Button className="mt-8" type="submit">Authorize Login</Button>
                 </form>
 
                 <p className="text-sm text-gray-500 mt-8">Looking for the status of a loved one?</p>

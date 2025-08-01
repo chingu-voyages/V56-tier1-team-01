@@ -1,26 +1,19 @@
 import React from 'react'
-import { Route, Navigate } from 'react-router-dom'
+import { Navigate, redirect, useNavigate } from 'react-router-dom'
 import { useAuth } from './AuthProvider'
 
-export default function ProtectedRoute( { children } ) {
-    const { isAuthenticated } = useAuth()
+export default function ProtectedRoute( { children, requiredAccess } ) {
+    const { isAuthenticated, userAccess } = useAuth()
+    const navigate = useNavigate()
 
-     if (!isAuthenticated) {
-            return  <Navigate to="/login" replace/>
-        }
+    if (!isAuthenticated) {
+        return <Navigate to="/login" replace />
+    }
 
-        return children
+    if (requiredAccess && !userAccess.includes(requiredAccess)) {
+        alert("You do not have access to this page")
+        return <Navigate to="/patient-status-update" replace/>
+    }
 
-    // return (
-    //     <Route
-    //         {...rest}
-    //         render={props =>
-    //             isAuthenticated ? (
-    //                 <Component {...props} />
-    //                 ) : (
-    //                 <Navigate to="/" />
-    //                 )
-    //         }
-    //     />
-    // )
+    return children
 }

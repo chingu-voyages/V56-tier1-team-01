@@ -18,10 +18,12 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<LoginForm />} />
-            <Route path="/patient-information" element={<ProtectedRoute><PatientInformation /></ProtectedRoute>} />
+            <Route
+              path="/patient-information"
+              element={<ProtectedRoute requiredAccess={"admin"}><PatientInformation /></ProtectedRoute>} />
             <Route
               path="/patient-status-update"
-              element={<PatientStatusUpdate />}
+              element={<ProtectedRoute><PatientStatusUpdate /></ProtectedRoute>}
             />
             <Route path="/patient-status" element={<PatientStatus />} />
           </Routes>
