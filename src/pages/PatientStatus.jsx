@@ -1,7 +1,10 @@
-import React from 'react'
+import React from 'react';
+import PatientStatusDisplay from '@/components/PatientStatusDisplay';
 
 export default function PatientStatus() {
-    return(
-        <h1>This is the patient status page!</h1>
-    )
+  return (
+    <main>
+      <PatientStatusDisplay />
+    </main>
+  );
 }
