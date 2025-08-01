@@ -24,7 +24,7 @@ function App() {
         <Routes>
           <Route path='/' element={<LandingPage />} />
           <Route path="/login" element={<LoginForm />} />
-          <Route path='/patient-information' element={<ProtectedRoute requiredAccess={"admin"}><PatientInformation /></ProtectedRoute>} />
+          <Route path='/patient-information' element={<ProtectedRoute requiredAccess={"admin"}><PatientInfoPage /></ProtectedRoute>} />
           <Route
             path='/patient-status-update'
             element={<ProtectedRoute><PatientStatusUpdate /></ProtectedRoute>}
