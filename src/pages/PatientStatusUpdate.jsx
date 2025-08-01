@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PatientInformationCard from "../components/ui/PatientInformationCard";
+import SearchBar from "../components/layout/SearchBar";
 
 //dummy patient data
 const patient = {
@@ -13,24 +14,18 @@ const patient = {
   status: "Checked In",
 };
 export default function PatientStatusUpdate() {
+  const [foundPatient, setFoundPatient] = useState(null);
   return (
     <div className="px-4 sm:px-6 md:px-8">
       <h1 className="text-2xl font-bold text-gray-900 text-center mt-16 mb-8">
         Patient Status Update
       </h1>
-      {/* Search bar for patient lookup */}
       <div className="flex flex-initial justify-center mt-4 mb-6">
-        <input
-          type="search"
-          placeholder="Search for a patient by name or ID#..."
-          className="w-6/12 px-4 py-2 border border-gray-300 rounded-md shadow-sm 
-             text-sm sm:text-base md:text-lg 
-             focus:outline-none focus:border-blue-500"
-        />
+        <SearchBar onPatientFound={setFoundPatient} />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
         <div>
-          <PatientInformationCard patient={patient} />
+          <PatientInformationCard patient={foundPatient} />
         </div>
         <div>
           <div className="flex flex-initial flex-col space-y-4">

@@ -8,16 +8,16 @@ import {
 } from "@/components/ui/card";
 
 export default function PatientInformationCard({ patient }) {
-  // Ensure patient data is available and provide defaults
+  const safePatient = patient || {};
   const displayPatient = {
-    firstName: patient.firstName || "N/A",
-    lastName: patient.lastName || "N/A",
-    patientNumber: patient.patientNumber || "N/A",
-    status: patient.status || "N/A",
-    address: `${patient.address || "N/A"}, ${patient.city || "N/A"}, ${
-      patient.state || "N/A"
+    firstName: safePatient.firstName || "N/A",
+    lastName: safePatient.lastName || "N/A",
+    patientNumber: safePatient.id || "N/A",
+    status: safePatient.status || "N/A",
+    address: `${safePatient.address || "N/A"}, ${safePatient.city || "N/A"}, ${
+      safePatient.state || "N/A"
     }`,
-    telephone: patient.telephone || "N/A",
+    telephone: safePatient.phone || "N/A",
   };
   return (
     <Card>
@@ -30,7 +30,7 @@ export default function PatientInformationCard({ patient }) {
       </CardHeader>
       <CardContent className="flex flex-col items-center text-left">
         <p>
-          Patient: {displayPatient.firstname} {displayPatient.lastName}
+          Patient: {displayPatient.firstName} {displayPatient.lastName}
         </p>
         <p>Patient Number: {displayPatient.patientNumber}</p>
         <p>Address: {displayPatient.address}</p>
