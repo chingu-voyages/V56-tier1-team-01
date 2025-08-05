@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { useAuth } from "../AuthProvider";
+import { useAuth } from "../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
 
 const credentials = [
@@ -48,9 +48,9 @@ export default function LoginForm() {
     useEffect(() => {
         if (isAuthenticated) {
             if (userAccess === "admin") {
-                navigate("/patient-information")
+                navigate("/admin-home")
             } else if (userAccess == "team") {
-                navigate("/patient-status-update")
+                navigate("/stm-home")
             }
         }
     }, [isAuthenticated, userAccess, navigate])

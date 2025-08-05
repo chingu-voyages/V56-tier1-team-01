@@ -6,8 +6,8 @@ import PatientInfoPage from "./pages/PatientInfoPage.jsx";
 import PatientStatusUpdate from "./pages/PatientStatusUpdate.jsx";
 import PatientStatus from "./pages/PatientStatus.jsx";
 import LoginForm from "./pages/LoginForm";
-import { AuthProvider } from "./AuthProvider";
-import ProtectedRoute from "./ProtectedRoute";
+import { AuthProvider } from "./context/AuthProvider";
+import ProtectedRoute from "./context/ProtectedRoute";
 import AdminHome from "./pages/AdminHome.jsx";
 import STMHome from "./pages/STMHome.jsx";
 import { PatientProvider } from "./context/PatientProvider";
@@ -19,7 +19,12 @@ function App() {
     <PatientProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/login" element={<MainLayout><LoginForm /></MainLayout>} />
+          <Route 
+            path="/login" 
+            element={
+              <MainLayout>
+                <LoginForm />
+              </MainLayout>} />
           <Route
             path='/'
             element={
@@ -32,7 +37,9 @@ function App() {
             path='/patient-information'
             element={
               <MainLayout>
-                <ProtectedRoute><PatientInfoPage /></ProtectedRoute>
+                <ProtectedRoute>
+                  <PatientInfoPage />
+                </ProtectedRoute>
               </MainLayout>
             }
           />
@@ -40,7 +47,9 @@ function App() {
             path='/patient-status-update'
             element={
               <MainLayout>
-                <ProtectedRoute><PatientStatusUpdate /></ProtectedRoute>
+                <ProtectedRoute>
+                  <PatientStatusUpdate />
+                </ProtectedRoute>
               </MainLayout>
             }
           />

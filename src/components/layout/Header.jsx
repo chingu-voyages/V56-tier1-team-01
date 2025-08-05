@@ -4,6 +4,9 @@ import {
   NavigationMenu,
   NavigationMenuList,
   NavigationMenuItem,
+  NavigationMenuTrigger,
+  NavigationMenuLink,
+  NavigationMenuContent
 } from '@/components/ui/navigation-menu';
 import {
   Sheet,
@@ -13,10 +16,12 @@ import {
 } from '@/components/ui/sheet';
 import { Menu } from 'lucide-react';
 import { X } from 'lucide-react';
+import { useAuth } from '@/context/AuthProvider';
 
 // Add mobile navigation and resposive design
 
 export default function Header() {
+  const { isAuthenticated, userAccess, logout } = useAuth();
   return (
     <nav className='flex items-center justify-between px-6 py-3 border-b bg-white shadow-sm transition-all duration-300'>
       <h1 className='text-lg font-bold text-gray-900 transform hover:scale-105 transition-transform duration-200 cursor-default'>
@@ -40,7 +45,7 @@ export default function Header() {
                 Home
               </NavLink>
             </NavigationMenuItem>
-            <NavigationMenuItem>
+            {/* <NavigationMenuItem>
               <NavLink
                 to='/stm-home'
                 className={({ isActive }) =>
@@ -68,7 +73,7 @@ export default function Header() {
               >
                 Admin
               </NavLink>
-            </NavigationMenuItem>
+            </NavigationMenuItem> */}
 
             <NavigationMenuItem>
               <NavLink
@@ -113,7 +118,48 @@ export default function Header() {
                 Patient Status
               </NavLink>
             </NavigationMenuItem>
-          </NavigationMenuList>
+
+              {isAuthenticated && (
+                <NavigationMenuItem className='relative transform hover:scale-105 transition-all duration-200'>
+                  <NavigationMenuTrigger>
+                    {userAccess === 'admin' ? 'Admin' : userAccess === 'team' ? 'Surgery Team Member' : null}
+                  </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <ul className='flex flex-col gap-4 px-2 py-4 w-[150px]'>
+                        <li>
+                          <NavigationMenuLink>
+                            <NavLink
+                              to={userAccess === 'admin' ? '/admin-home' : userAccess === 'stm' ? '/stm-home' : '/'}
+                              className={({ isActive }) =>
+                                `px-4 py-2 rounded-lr transition-all duration-300 ease-in-out transform hover:shadow-md ${
+                                  isActive
+                                    ? 'bg-black text-white shadow-lg scale-105'
+                                    : 'text-gray-700 hover:bg-gray-100 hover:text-black hover:-translate-y-0.5 hover:scale-105'
+                                }`
+                              }
+                            >
+                              {userAccess === 'admin' ? 'Admin Home' : userAccess === 'team' ? 'STM Home' : null}
+                            </NavLink>
+                          </NavigationMenuLink>
+                        </li>
+                        <li>
+                          <NavigationMenuLink>
+                            {logout && (
+                              <NavLink
+                                to='/'
+                                onClick={logout} className='px-4 py-2 rounded-lr transition-all duration-300 ease-in-out transform hover:shadow-md text-red-500 hover:bg-gray-100 hover:text-black hover:-translate-y-0.5 hover:scale-105'
+                              >
+                                Logout
+                              </NavLink>
+                            )}
+                          </NavigationMenuLink>
+                        </li>
+                      </ul>
+                    </NavigationMenuContent>
+                </NavigationMenuItem>
+              )}
+
+            </NavigationMenuList>
         </NavigationMenu>
       </div>
 
