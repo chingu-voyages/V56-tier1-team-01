@@ -79,7 +79,6 @@ export default function Header() {
               <NavLink
                 to={isAuthenticated && userAccess === 'admin' ? '/patient-information' : isAuthenticated && userAccess === 'team' ? '#' : '/login'}
                 onClick={e => {
-                  // e.preventDefault();
                   if (isAuthenticated && userAccess !== 'admin') {
                     alert('Must have admin access to view this page.');
                   }
