@@ -19,8 +19,8 @@ function App() {
     <PatientProvider>
       <BrowserRouter>
         <Routes>
-          <Route 
-            path="/login" 
+          <Route
+            path="/login"
             element={
               <MainLayout>
                 <LoginForm />

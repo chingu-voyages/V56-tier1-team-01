@@ -77,10 +77,16 @@ export default function Header() {
 
             <NavigationMenuItem>
               <NavLink
-                to='/patient-information'
+                to={isAuthenticated && userAccess === 'admin' ? '/patient-information' : isAuthenticated && userAccess === 'team' ? '#' : '/login'}
+                onClick={e => {
+                  // e.preventDefault();
+                  if (isAuthenticated && userAccess !== 'admin') {
+                    alert('Must have admin access to view this page.');
+                  }
+                }}
                 className={({ isActive }) =>
                   `px-4 py-2 rounded-lr transition-all duration-300 ease-in-out transform hover:shadow-md ${
-                    isActive
+                    isActive && isAuthenticated && userAccess === 'admin'
                       ? 'bg-black text-white shadow-lg scale-105'
                       : 'text-gray-700 hover:bg-gray-100 hover:text-black hover:-translate-y-0.5 hover:scale-105'
                   }`
@@ -92,10 +98,10 @@ export default function Header() {
 
             <NavigationMenuItem>
               <NavLink
-                to='/patient-status-update'
+                to={!isAuthenticated ? '/login' : '/patient-status-update'}
                 className={({ isActive }) =>
                   `px-4 py-2 rounded-lr transition-all duration-300 ease-in-out transform hover:shadow-md ${
-                    isActive
+                    isActive && isAuthenticated
                       ? 'bg-black text-white shadow-lg scale-105'
                       : 'text-gray-700 hover:bg-gray-100 hover:text-black hover:-translate-y-0.5 hover:scale-105'
                   }`
@@ -129,7 +135,7 @@ export default function Header() {
                         <li>
                           <NavigationMenuLink>
                             <NavLink
-                              to={userAccess === 'admin' ? '/admin-home' : userAccess === 'stm' ? '/stm-home' : '/'}
+                              to={userAccess === 'admin' ? '/admin-home' : userAccess === 'team' ? '/stm-home' : '/'}
                               className={({ isActive }) =>
                                 `px-4 py-2 rounded-lr transition-all duration-300 ease-in-out transform hover:shadow-md ${
                                   isActive
@@ -162,6 +168,8 @@ export default function Header() {
             </NavigationMenuList>
         </NavigationMenu>
       </div>
+
+      {/* Mobile Navigation */}
 
       <div className='customMd:hidden transition-opacity duration-300'>
         <Sheet>

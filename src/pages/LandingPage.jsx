@@ -19,7 +19,7 @@ export default function LandingPage() {
               Enter as Guest
             </Button>
           </Link>
-          <Link to=''>
+          <Link to='/login'>
             <Button size='lg' className='w-full sm:w-auto'>
               Authorized Login
             </Button>
