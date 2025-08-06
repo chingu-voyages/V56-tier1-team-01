@@ -12,7 +12,7 @@ export default function LandingPage() {
           Get real-time updates on your loved one's surgery.
         </p>
        
-        <div className="flex justify-around mt-6">
+        <div className="flex flex-col md:flex-row gap-4 md:gap-0 justify-around mt-6">
           <Link to="/patient-status"><Button size="lg" variant="outline">Enter as Guest</Button></Link>
           <Link to=""><Button size="lg">Authorized Login</Button></Link>
         </div>
