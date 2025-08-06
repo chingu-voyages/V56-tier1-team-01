@@ -4,9 +4,6 @@ import {
   NavigationMenu,
   NavigationMenuList,
   NavigationMenuItem,
-  NavigationMenuTrigger,
-  NavigationMenuLink,
-  NavigationMenuContent
 } from '@/components/ui/navigation-menu';
 import {
   Sheet,
@@ -14,8 +11,15 @@ import {
   SheetTrigger,
   SheetClose,
 } from '@/components/ui/sheet';
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible"
 import { Menu } from 'lucide-react';
 import { X } from 'lucide-react';
+import { CircleUserRound } from 'lucide-react';
+import { LogOut } from 'lucide-react';
 import { useAuth } from '@/context/AuthProvider';
 
 // Add mobile navigation and resposive design
@@ -35,7 +39,7 @@ export default function Header() {
                 to='/'
                 end
                 className={({ isActive }) =>
-                  `px-4 py-2 rounded-lr transition-all duration-300 ease-in-out transform hover:shadow-md ${
+                  `px-4 py-2 rounded-lg transition-all duration-300 ease-in-out transform hover:shadow-md ${
                     isActive
                       ? 'bg-black text-white shadow-lg scale-105'
                       : 'text-gray-700 hover:bg-gray-100 hover:text-black hover:-translate-y-0.5 hover:scale-105'
@@ -55,7 +59,7 @@ export default function Header() {
                   }
                 }}
                 className={({ isActive }) =>
-                  `px-4 py-2 rounded-lr transition-all duration-300 ease-in-out transform hover:shadow-md ${
+                  `px-4 py-2 rounded-lg transition-all duration-300 ease-in-out transform hover:shadow-md ${
                     isActive && isAuthenticated && userAccess === 'admin'
                       ? 'bg-black text-white shadow-lg scale-105'
                       : 'text-gray-700 hover:bg-gray-100 hover:text-black hover:-translate-y-0.5 hover:scale-105'
@@ -70,7 +74,7 @@ export default function Header() {
               <NavLink
                 to={!isAuthenticated ? '/login' : '/patient-status-update'}
                 className={({ isActive }) =>
-                  `px-4 py-2 rounded-lr transition-all duration-300 ease-in-out transform hover:shadow-md ${
+                  `px-4 py-2 rounded-lg transition-all duration-300 ease-in-out transform hover:shadow-md ${
                     isActive && isAuthenticated
                       ? 'bg-black text-white shadow-lg scale-105'
                       : 'text-gray-700 hover:bg-gray-100 hover:text-black hover:-translate-y-0.5 hover:scale-105'
@@ -84,7 +88,7 @@ export default function Header() {
               <NavLink
                 to='/patient-status'
                 className={({ isActive }) =>
-                  `px-4 py-2 rounded-lr transition-all duration-300 ease-in-out transform hover:shadow-md ${
+                  `px-4 py-2 rounded-lg transition-all duration-300 ease-in-out transform hover:shadow-md ${
                     isActive
                       ? 'bg-black text-white shadow-lg scale-105'
                       : 'text-gray-700 hover:bg-gray-100 hover:text-black hover:-translate-y-0.5 hover:scale-105'
@@ -96,18 +100,18 @@ export default function Header() {
             </NavigationMenuItem>
 
               {isAuthenticated && (
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger>
-                    {userAccess === 'admin' ? 'Admin' : userAccess === 'team' ? 'Surgery Team Member' : null}
-                  </NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                      <ul className='flex flex-col gap-4 px-2 py-4 w-[160px]'>
+                <Collapsible className='text-sm'>
+                  <CollapsibleTrigger>
+                    <CircleUserRound  />
+                  </CollapsibleTrigger>
+                    <CollapsibleContent className='absolute right-0 top-9 bg-white shadow-lg border rounded-lg px-2'>
+                    <div className='p-4'>Welcome, {userAccess === 'admin' ? 'Admin' : userAccess === 'team' ? 'Surgery Team Member' : null}!</div>
+                      <ul className='flex flex-col gap-4 px-2 pb-4 w-[160px]'>
                         <li>
-                          <NavigationMenuLink>
                             <NavLink
                               to={userAccess === 'admin' ? '/admin-home' : userAccess === 'team' ? '/stm-home' : '/'}
                               className={({ isActive }) =>
-                                `px-4 py-2 rounded-lr transition-all duration-300 ease-in-out transform hover:shadow-md ${
+                                `px-4 py-2 rounded-lg transition-all duration-300 ease-in-out transform hover:shadow-md ${
                                   isActive
                                     ? 'bg-black text-white shadow-lg scale-105'
                                     : 'text-gray-700 hover:bg-gray-100 hover:text-black hover:-translate-y-0.5 hover:scale-105'
@@ -116,23 +120,20 @@ export default function Header() {
                             >
                               {userAccess === 'admin' ? 'Admin Home' : userAccess === 'team' ? 'STM Home' : null}
                             </NavLink>
-                          </NavigationMenuLink>
                         </li>
                         <li>
-                          <NavigationMenuLink>
                             {logout && (
                               <NavLink
                                 to='/'
-                                onClick={logout} className='px-4 py-2 rounded-lr transition-all duration-300 ease-in-out transform hover:shadow-md text-red-500 hover:bg-gray-100 hover:text-black hover:-translate-y-0.5 hover:scale-105'
+                                onClick={logout} className='px-4 py-2 rounded-lg transition-all duration-300 ease-in-out transform hover:shadow-md text-red-500 hover:bg-gray-100 hover:text-black hover:-translate-y-0.5 hover:scale-105'
                               >
-                                Logout
+                                Logout <LogOut className='inline-block h-4 mt-[-2px]'/>
                               </NavLink>
                             )}
-                          </NavigationMenuLink>
                         </li>
                       </ul>
-                    </NavigationMenuContent>
-                </NavigationMenuItem>
+                    </CollapsibleContent>
+                </Collapsible>
               )}
 
             </NavigationMenuList>
@@ -176,39 +177,6 @@ export default function Header() {
                   Home
                 </NavLink>
               </SheetClose>
-              {isAuthenticated && userAccess === 'team' && (
-                <SheetClose asChild>
-                  <NavLink
-                    to='/stm-home'
-                    className={({ isActive }) =>
-                      `text-lg transition-all duration-300 ease-out p-3 rounded-lg transform hover:scale-105 hover:shadow-sm ${
-                        isActive
-                          ? 'text-black font-semibold bg-gray-100 shadow-sm scale-105'
-                          : 'text-gray-800 hover:text-black hover:bg-gray-50'
-                      }`
-                    }
-                  >
-                    STM Home
-                  </NavLink>
-                </SheetClose>
-              )}
-
-              {isAuthenticated && userAccess === 'admin' && (
-                <SheetClose asChild>
-                  <NavLink
-                    to='/admin-home'
-                    className={({ isActive }) =>
-                      `text-lg transition-all duration-300 ease-out p-3 rounded-lg transform hover:scale-105 hover:shadow-sm ${
-                        isActive
-                          ? 'text-black font-semibold bg-gray-100 shadow-sm scale-105'
-                          : 'text-gray-800 hover:text-black hover:bg-gray-50'
-                      }`
-                    }
-                  >
-                    Admin Home
-                  </NavLink>
-                </SheetClose>
-              )}
 
               <SheetClose asChild>
                 <NavLink
@@ -257,6 +225,45 @@ export default function Header() {
                   Patient Status
                 </NavLink>
               </SheetClose>
+
+              <div className='flex items-center justify-between px-4 pt-4 pb-2 border-b animate-in fade-in-50 slide-in-from-top-2 duration-400'>
+                <h3 className='text-l font-semibold text-gray-900'>Welcome, {userAccess === 'admin' ? 'Admin' : userAccess === 'team' ? 'Surgery Team Member' : null}!</h3>
+              </div>
+
+               {isAuthenticated && userAccess === 'team' && (
+                <SheetClose asChild>
+                  <NavLink
+                    to='/stm-home'
+                    className={({ isActive }) =>
+                      `text-lg transition-all duration-300 ease-out p-3 rounded-lg transform hover:scale-105 hover:shadow-sm ${
+                        isActive
+                          ? 'text-black font-semibold bg-gray-100 shadow-sm scale-105'
+                          : 'text-gray-800 hover:text-black hover:bg-gray-50'
+                      }`
+                    }
+                  >
+                    STM Home
+                  </NavLink>
+                </SheetClose>
+              )}
+
+              {isAuthenticated && userAccess === 'admin' && (
+                <SheetClose asChild>
+                  <NavLink
+                    to='/admin-home'
+                    className={({ isActive }) =>
+                      `text-lg transition-all duration-300 ease-out p-3 rounded-lg transform hover:scale-105 hover:shadow-sm ${
+                        isActive
+                          ? 'text-black font-semibold bg-gray-100 shadow-sm scale-105'
+                          : 'text-gray-800 hover:text-black hover:bg-gray-50'
+                      }`
+                    }
+                  >
+                    Admin Home
+                  </NavLink>
+                </SheetClose>
+              )}
+
               {isAuthenticated && (
                 <SheetClose asChild>
                   <NavLink
@@ -264,7 +271,7 @@ export default function Header() {
                     onClick={logout}
                     className='text-lg transition-all duration-300 ease-out p-3 rounded-lg transform hover:scale-105 hover:shadow-sm text-red-500 hover:bg-gray-100 hover:text-black'
                   >
-                    Logout
+                    Logout <LogOut className='inline-block h-4 mt-[-2px]'/>
                   </NavLink>
                 </SheetClose>
               )}
