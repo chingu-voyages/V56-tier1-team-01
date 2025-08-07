@@ -123,14 +123,11 @@ export default function PatientForm() {
           };
 
           if (selectedPatient) {
-            // Updating an existing patient
-            addPatient(updatedPatient); // assuming `addPatient` overwrites by ID
+            addPatient(updatedPatient); 
           } else {
-            // Creating a new patient
             addPatient(updatedPatient);
           }
 
-          // Reset the form
           setFormData({
             status: "checkedIn",
             firstName: "",
@@ -144,7 +141,7 @@ export default function PatientForm() {
           });
           setErrors({});
           setPatientId(generatePatientID());
-          setSelectedPatient(null); // Reset selected patient
+          setSelectedPatient(null);
         }}
       >
         <div className="mb-4">
