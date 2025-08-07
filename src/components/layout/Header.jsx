@@ -230,9 +230,11 @@ export default function Header() {
                 </NavLink>
               </SheetClose>
 
-              <div className='flex items-center justify-between px-4 pt-4 pb-2 border-b animate-in fade-in-50 slide-in-from-top-2 duration-400'>
-                <h3 className='text-l font-semibold text-gray-900'>Welcome, {userAccess === 'admin' ? 'Admin' : userAccess === 'team' ? 'Surgery Team Member' : null}!</h3>
-              </div>
+              {isAuthenticated && (
+                <div className='flex items-center justify-between px-4 pt-4 pb-2 border-b animate-in fade-in-50 slide-in-from-top-2 duration-400'>
+                  <h3 className='text-l font-semibold text-gray-900'>Welcome, {userAccess === 'admin' ? 'Admin' : userAccess === 'team' ? 'Surgery Team Member' : null}!</h3>
+                </div>
+              )}
 
                {isAuthenticated && userAccess === 'team' && (
                 <SheetClose asChild>
