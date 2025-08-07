@@ -13,6 +13,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { generatePatientID } from "./patientUtils";
 import { usePatients } from "@/context/usePatients";
 import { US_STATES } from "@/constants/usStates";
+import SearchBar from "@/components/layout/SearchBar";
 
 // Patient information form to collect new patient information and store it in the system, collects basic patient data and generates a patient ID.
 
@@ -33,6 +34,22 @@ export default function PatientForm() {
   });
 
   const [errors, setErrors] = useState({});
+  const [selectedPatient, setSelectedPatient] = useState(null);
+  const handlePatientSelect = (patient) => {
+    setSelectedPatient(patient);
+    setPatientId(patient.id); // Use existing ID, don't generate a new one
+    setFormData({
+      status: patient.status || "checkedIn",
+      firstName: patient.firstName || "",
+      lastName: patient.lastName || "",
+      address: patient.address || "",
+      city: patient.city || "",
+      state: patient.state || "",
+      country: patient.country || "United States",
+      phone: patient.phone || "",
+      email: patient.email || "",
+    });
+  };
 
   // Generate a new patient ID when the component mounts - this ID is currently NOT unique - we may want to think about how to ensure uniqueness in the future.
   useEffect(() => {
@@ -84,25 +101,38 @@ export default function PatientForm() {
   return (
     <div className="bg-white shadow-md rounded-lg p-6 sm:p-8 max-w-lg sm:max-w-2xl w-full mx-auto">
       <h2 className="text-xl font-bold mb-6 text-center">
-        New Patient Entry Form
+        Add or Update Patient Information
       </h2>
+      <div className="mb-6">
+        <h3 className="text-lg font-normal text-center mb-2">
+          Use the Search Bar below to find and update existing patient
+          information
+        </h3>
+        <SearchBar onPatientFound={handlePatientSelect} />
+      </div>
+
       <form
         onSubmit={(e) => {
           e.preventDefault();
 
-          if (!validateForm()) {
-            return;
-          }
+          if (!validateForm()) return;
 
-          const newPatient = {
+          const updatedPatient = {
             id: patientId,
             ...formData,
           };
-          addPatient(newPatient);
 
-          // Reset the form and generate a new patient ID for the next entry
+          if (selectedPatient) {
+            // Updating an existing patient
+            addPatient(updatedPatient); // assuming `addPatient` overwrites by ID
+          } else {
+            // Creating a new patient
+            addPatient(updatedPatient);
+          }
+
+          // Reset the form
           setFormData({
-            status: "Checked In",
+            status: "checkedIn",
             firstName: "",
             lastName: "",
             address: "",
@@ -114,6 +144,7 @@ export default function PatientForm() {
           });
           setErrors({});
           setPatientId(generatePatientID());
+          setSelectedPatient(null); // Reset selected patient
         }}
       >
         <div className="mb-4">
@@ -297,7 +328,9 @@ export default function PatientForm() {
           >
             Cancel
           </Button>
-          <Button type="submit">Add New Patient</Button>
+          <Button type="submit">
+            {selectedPatient ? "Update Patient" : "Add New Patient"}
+          </Button>
         </div>
       </form>
 
