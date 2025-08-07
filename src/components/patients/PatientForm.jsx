@@ -102,7 +102,7 @@ export default function PatientForm() {
 
           // Reset the form and generate a new patient ID for the next entry
           setFormData({
-            status: "checkedIn",
+            status: "Checked In",
             firstName: "",
             lastName: "",
             address: "",
