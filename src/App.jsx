@@ -11,6 +11,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import AdminHome from "./pages/AdminHome.jsx";
 import STMHome from "./pages/STMHome.jsx";
 import Header from "./components/layout/Header.jsx";
+import Footer from "./components/layout/Footer.jsx";
 import { PatientProvider } from "./context/PatientProvider";
 
 
@@ -32,6 +33,7 @@ function App() {
           <Route path='/admin-home' element={<AdminHome />} />
           <Route path='/stm-home' element={<STMHome />} />
         </Routes>
+        <Footer />
       </BrowserRouter>
     </PatientProvider>
     </AuthProvider>
