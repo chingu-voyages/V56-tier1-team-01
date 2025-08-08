@@ -1,33 +1,39 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React from "react";
+import { NavLink, Link } from "react-router-dom";
 import {
   NavigationMenu,
   NavigationMenuList,
   NavigationMenuItem,
 } from '@/components/ui/navigation-menu';
+
 import {
   Sheet,
   SheetContent,
   SheetTrigger,
   SheetClose,
-} from '@/components/ui/sheet';
-import { Menu } from 'lucide-react';
-import { X } from 'lucide-react';
+} from "@/components/ui/sheet";
+import { Menu } from "lucide-react";
+import { X } from "lucide-react";
+import { displayDate } from "./headerUtils.js" 
+
 
 // Add mobile navigation and resposive design
 
 export default function Header() {
   return (
-    <nav className='flex items-center justify-between px-6 py-3 border-b bg-white shadow-sm transition-all duration-300'>
-      <h1 className='text-lg font-bold text-gray-900 transform hover:scale-105 transition-transform duration-200 cursor-default'>
-        Surgery Status Board
-      </h1>
-      <div className='hidden customMd:block transition-opacity duration-300'>
+    <nav className="flex items-center justify-between px-6 py-3 border-b bg-white shadow-sm transition-all duration-300">
+      <div className="flex flex-col gap-2 justify-start lg:flex-row lg:gap-8">
+        <h1 className="text-lg font-bold text-gray-900 transform hover:scale-105 transition-transform duration-200 cursor-default self-center">
+          <Link to="/">Surgery Status Board</Link>
+        </h1>
+        <p className="self-start lg:self-center">{displayDate}</p>
+       </div>
+      <div className="hidden customMd:block transition-opacity duration-300">
         <NavigationMenu>
-          <NavigationMenuList className='flex space-x-2'>
-            <NavigationMenuItem className='transform hover:scale-105 transition-all duration-200'>
+          <NavigationMenuList className="flex space-x-2">
+            <NavigationMenuItem className="transform hover:scale-105 transition-all duration-200">
               <NavLink
-                to='/'
+                to="/"
                 end
                 className={({ isActive }) =>
                   `px-4 py-2 rounded-lr transition-all duration-300 ease-in-out transform hover:shadow-md ${

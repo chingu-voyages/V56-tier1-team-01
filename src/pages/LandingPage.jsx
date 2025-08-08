@@ -12,7 +12,6 @@ export default function LandingPage() {
         <p className='my-10 text-md sm:text-lg text-slate-600'>
           Get real-time updates on your loved one's surgery.
         </p>
-
         <div className='flex flex-col sm:flex-row gap-4 mt-6 justify-center'>
           <Link to='/patient-status'>
             <Button size='lg' variant='outline' className='w-full sm:w-auto'>
