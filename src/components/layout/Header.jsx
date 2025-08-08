@@ -15,7 +15,16 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible"
+} from "@/components/ui/collapsible";
+import {
+ DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+  DropdownMenuGroup,
+} from "@/components/ui/dropdown-menu.jsx"
 import { Menu } from 'lucide-react';
 import { X } from 'lucide-react';
 import { CircleUserRound } from 'lucide-react';
@@ -104,15 +113,15 @@ export default function Header() {
             </NavigationMenuItem>
 
               {isAuthenticated && (
-                <Collapsible className='text-sm'>
-                  <CollapsibleTrigger>
-                    <CircleUserRound  />
-                  </CollapsibleTrigger>
-                    <CollapsibleContent className='absolute right-0 top-9 bg-white shadow-lg border rounded-lg px-2'>
-                    <div className='p-4'>Welcome, {userAccess === 'admin' ? 'Admin' : userAccess === 'team' ? 'Surgery Team Member' : null}!</div>
-                      <ul className='flex flex-col gap-4 px-2 pb-4 w-[160px]'>
-                        <li>
-                            <NavLink
+                <DropdownMenu className='text-sm'>
+                  <DropdownMenuTrigger>
+                    <CircleUserRound />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className='absolute right-0 top-9 bg-white shadow-lg border rounded-lg px-2 text-center'>
+                    <DropdownMenuLabel className=''>Welcome, {userAccess === 'admin' ? 'Admin' : userAccess === 'team' ? 'Surgery Team Member' : null}!</DropdownMenuLabel>
+                    <DropdownMenuGroup className="flex flex-col justify-center items-center px-2 pb-4 w-[160px]">
+                      <DropdownMenuItem>
+                      <NavLink
                               to={userAccess === 'admin' ? '/admin-home' : userAccess === 'team' ? '/stm-home' : '/'}
                               className={({ isActive }) =>
                                 `px-4 py-2 rounded-lg transition-all duration-300 ease-in-out transform hover:shadow-md ${
@@ -123,10 +132,10 @@ export default function Header() {
                               }
                             >
                               {userAccess === 'admin' ? 'Admin Home' : userAccess === 'team' ? 'STM Home' : null}
-                            </NavLink>
-                        </li>
-                        <li>
-                            {logout && (
+                      </NavLink>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      {logout && (
                               <NavLink
                                 to='/'
                                 onClick={logout} className='px-4 py-2 rounded-lg transition-all duration-300 ease-in-out transform hover:shadow-md text-red-500 hover:bg-gray-100 hover:text-black hover:-translate-y-0.5 hover:scale-105'
@@ -134,10 +143,11 @@ export default function Header() {
                                 Logout <LogOut className='inline-block h-4 mt-[-2px]'/>
                               </NavLink>
                             )}
-                        </li>
-                      </ul>
-                    </CollapsibleContent>
-                </Collapsible>
+                    </DropdownMenuItem>
+                    </DropdownMenuGroup>
+                    
+                  </DropdownMenuContent>
+                </DropdownMenu>
               )}
 
             </NavigationMenuList>
