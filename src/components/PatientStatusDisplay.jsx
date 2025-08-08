@@ -4,32 +4,73 @@ import React, { useRef, useEffect, useState } from "react"
 // Function addPatientStatus(newId, newStatus) will add new patient to list
 // Function removePatientStatus(idToRemove) will remove patient from list
 
+const HARDCODED_PATIENTS = [
+  {id:'HCWB24', status:'Checked In'},
+  {id:'5TG55', status:'Pre-Procedure'},
+  {id:'UD5XV', status:'In-Progress'},
+  {id:'2BN87', status:'Closing'},
+  {id:'FFY95', status:'Closing'},
+  {id:'KH358', status:'Recovery'},
+  {id:'OI84D', status:'Complete'},
+  {id:'PBB2GV', status:'In-Progress'},
+  {id:'J9C54', status:'Recovery'},
+  {id:'ZMVCI', status:'In-Progress'},
+  {id:'XPMKQ', status:'Checked In'},
+  {id:'Y9V1O', status:'Recovery'},
+  {id:'VO414', status:'Complete'},
+  {id:'3D9FF', status:'Dismissal'},
+  {id:'7622A', status:'Pre-Procedure'},
+  {id:'A7C9Q', status:'In-Progress'},
+  {id:'3P2M6', status:'Checked In'},
+  {id:'X8T1F', status:'Dismissal'},
+  {id:'R6N3W', status:'Pre-Procedure'},
+];
+
+const STATUS_LABELS = {
+  checkedIn: "Checked In",
+  preProcedure: "Pre-Procedure",
+  inProgress: "In-Progress",
+  closing: "Closing",
+  recovery: "Recovery",
+  complete: "Complete",
+  dismissal: "Dismissal",
+};
+
+function mergePatients(hardcoded, fromStorage) {
+  // Use a map to merge by id, storage takes priority
+  const map = {};
+  hardcoded.forEach(p => { map[p.id] = p; });
+  fromStorage.forEach(p => { map[p.id] = p; });
+  return Object.values(map);
+}
+
 function PatientStatusDisplay() {
-  const [patientCurrentStatus, setPatientCurrentStatus] = useState([
-    {id:'HCWB24', status:'Checked In'},
-    {id:'5TG55', status:'Pre-Procedure'},
-    {id:'UD5XV', status:'In-Progress'},
-    {id:'2BN87', status:'Closing'},
-    {id:'FFY95', status:'Closing'},
-    {id:'KH358', status:'Recovery'},
-    {id:'OI84D', status:'Complete'},
-    {id:'PBB2GV', status:'In-Progress'},
-    {id:'J9C54', status:'Recovery'},
-    {id:'ZMVCI', status:'In-Progress'},
-    {id:'XPMKQ', status:'Checked In'},
-    {id:'Y9V1O', status:'Recovery'},
-    {id:'VO414', status:'Complete'},
-    {id:'3D9FF', status:'Dismissal'},
-    {id:'7622A', status:'Pre-Procedure'},
-    {id:'A7C9Q', status:'In-Progress'},
-    {id:'3P2M6', status:'Checked In'},
-    {id:'X8T1F', status:'Dismissal'},
-    {id:'R6N3W', status:'Pre-Procedure'},
-// The 7 statuses: Checked In, Pre-Procedure, In-Progress, Closing, Recovery, Complete, Dismissal
-  ])
+  // Load from localStorage and merge with hardcoded list
+  const [patientCurrentStatus, setPatientCurrentStatus] = useState(() => {
+    const patientsString = localStorage.getItem("patients");
+    if (patientsString) {
+      try {
+        const patientsObj = JSON.parse(patientsString);
+        const fromStorage = Object.values(patientsObj);
+        return mergePatients(HARDCODED_PATIENTS, fromStorage);
+      } catch {
+        return [...HARDCODED_PATIENTS];
+      }
+    }
+    return [...HARDCODED_PATIENTS];
+  });
+
+  // Save to localStorage on change
+  useEffect(() => {
+    const patientsObj = {};
+    patientCurrentStatus.forEach(p => {
+      patientsObj[p.id] = p;
+    });
+    localStorage.setItem("patients", JSON.stringify(patientsObj));
+  }, [patientCurrentStatus]);
+
   const [currentPage, setCurrentPage] = useState(0)
   const patientsPerPage = 7
-
   const listContainerRef = useRef(null)
 
   function updateStatusById(id, newStatus) {
@@ -41,10 +82,15 @@ function PatientStatusDisplay() {
   }
 
   function addPatientStatus(newId, newStatus) {
-    setPatientCurrentStatus(prev => [
-      ...prev,
-      { id: newId, status: newStatus }
-    ]);
+    setPatientCurrentStatus(prev => {
+      const exists = prev.find(p => p.id === newId);
+      if (exists) {
+        // Update status if patient exists
+        return prev.map(p => p.id === newId ? { ...p, status: newStatus } : p);
+      }
+      // Otherwise, add new patient
+      return [...prev, { id: newId, status: newStatus }];
+    });
   }
 
   function removePatientStatus(idToRemove) {
@@ -95,6 +141,27 @@ function PatientStatusDisplay() {
     "Dismissal": "bg-red-200 text-red-800 border-red-300",
   };
 
+  // Remove patients with "Dismissal" status after 20 seconds
+  useEffect(() => {
+    // Find all patients with "dismissal" (key) or "Dismissal" (label) status
+    const dismissalPatients = patientCurrentStatus.filter(
+      p => p.status === "dismissal" || p.status === "Dismissal"
+    );
+    if (dismissalPatients.length === 0) return;
+
+    // Set a timer to remove them after 20 seconds
+    const timeout = setTimeout(() => {
+      setPatientCurrentStatus(prev =>
+        prev.filter(
+          p => p.status !== "dismissal" && p.status !== "Dismissal"
+        )
+      );
+    }, 20000);
+
+    // Cleanup timer if patients change before timeout
+    return () => clearTimeout(timeout);
+  }, [patientCurrentStatus]);
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
 
@@ -108,25 +175,29 @@ function PatientStatusDisplay() {
           className="overflow-y-auto"
         >
           <ul>
-            {patientsToShow.map(patient => (
-              <React.Fragment key={patient.id}>
-                <li className="flex items-center">
-                  <div className="w-1/2 flex justify-center">
-                    <span className="text-center text-lg">{patient.id}</span>
-                  </div>
-                  <div className="w-1/2 text-center">
-                    <span
-                      className={`border rounded-lg px-3 py-1 m-1 inline-block ${
-                        statusColors[patient.status] || "bg-white text-gray-800 border-gray-300"
-                      }`}
-                    >
-                      {patient.status}
-                    </span>
-                  </div>
-                </li>
-                <hr className="border-gray-300" />
-              </React.Fragment>
-            ))}
+            {patientsToShow.map(patient => {
+              // Use label mapping if status is a key, otherwise use as-is
+              const displayStatus = STATUS_LABELS[patient.status] || patient.status;
+              return (
+                <React.Fragment key={patient.id}>
+                  <li className="flex items-center">
+                    <div className="w-1/2 flex justify-center">
+                      <span className="text-center text-lg">{patient.id}</span>
+                    </div>
+                    <div className="w-1/2 text-center">
+                      <span
+                        className={`border rounded-lg px-3 py-1 m-1 inline-block ${
+                          statusColors[displayStatus] || "bg-white text-gray-800 border-gray-300"
+                        }`}
+                      >
+                        {displayStatus}
+                      </span>
+                    </div>
+                  </li>
+                  <hr className="border-gray-300" />
+                </React.Fragment>
+              );
+            })}
           </ul>
         </div>
         <div className="flex flex-col items-center justify-center mt-2">
