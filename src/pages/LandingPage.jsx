@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Link } from "react-router-dom"
+
 import coverImg from '../assets/cesar-badilla-miranda-0m4ZNiUcFy8-unsplash.jpg';
 
 export default function LandingPage() {
