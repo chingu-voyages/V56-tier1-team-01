@@ -1,38 +1,74 @@
-# voyage-tasks
+# 🏥 Surgery Status Board
 
-Your project's `readme` is as important to success as your code. For
-this reason you should put as much care into its creation and maintenance
-as you would any other component of the application.
+## Overview
 
-If you are unsure of what should go into the `readme` let this article,
-written by an experienced Chingu, be your starting point -
-[Keys to a well written README](https://tinyurl.com/yk3wubft).
+The **Surgery Status Board** is a web application built with **React** and **Vite** to help hospitals, surgical teams and loved ones track the real-time status of surgeries. It provides a central hub where admins can add and update patient information,surgical team members can update patient statuses and families can get updates on their loved ones.
 
-And before we go there's "one more thing"! Once you decide what to include
-in your `readme` feel free to replace the text we've provided here.
+This project was created during Chingu Voyage 56 collaboration to simulate building a real-world healthcare operations tool using a lean, agile workflow.
 
-> Own it & Make it your Own!
+---
 
-## Team Documents
+## ✨ Features
 
-You may find these helpful as you work together to organize your project.
+- **Role-based Login** — Different dashboards for Admins and Surgical Team Members.
+- **Real-time Status Updates** — Track the progress of surgeries from check in to completion.
+- **Responsive Design** — Accessible and easy to use on desktops, tablets, and mobile devices.
+- **Intuitive UI** — Clean, straightforward navigation for quick decision-making.
 
-- [Team Project Ideas](./docs/team_project_ideas.md)
-- [Team Decision Log](./docs/team_decision_log.md)
+---
 
-Meeting Agenda templates (located in the `/docs` directory in this repo):
+## 🚀 Demo
 
-- Meeting - Voyage Kickoff --> ./docs/meeting-voyage_kickoff.docx
-- Meeting - App Vision & Feature Planning --> ./docs/meeting-vision_and_feature_planning.docx
-- Meeting - Sprint Retrospective, Review, and Planning --> ./docs/meeting-sprint_retrospective_review_and_planning.docx
-- Meeting - Sprint Open Topic Session --> ./docs/meeting-sprint_open_topic_session.docx
+Live Demo: [https://v56-tier1-team-01.vercel.app/](https://v56-tier1-team-01.vercel.app/)
+
+**Test Logins**
+
+**Admin**
+Username: admin@hospital.com
+Password: Admin411
+
+**Surgical Team Member (STM)**
+Username: team@hospital.com
+Password: Team123
+
+---
+
+## 🖼️ Screenshot
+
+![Surgery Status Board Screenshot](public/website-screenshot.png)
+
+---
+
+## 🛠️ Running the Project
+
+### 1. Clone the repository
+
+git clone https://github.com/chingu-voyages/V56-tier1-team-01.git
+cd V56-tier1-team-01
+
+### 2. Install Dependencies
+
+npm install
+
+### 3. Start the development server
+
+npm run dev
+
+### 4. Open in your browser
+
+Go to the URL shown in your terminal.
+
+## 📦 Dependencies
+
+React — UI framework for building the app’s components.
+
+Vite — Lightning-fast development environment and bundler.
+
+React Router — For routing between admin and surgical team dashboards.
+
+Tailwind CSS with ShadCN components — For styling and responsive layouts.
 
 ## Our Team
-
-Everyone on your team should add their name along with a link to their GitHub
-& optionally their LinkedIn profiles below. Do this in Sprint #1 to validate
-your repo access and to practice PR'ing with your team _before_ you start
-coding!
 
 - Sarah: [GitHub](https://github.com/sarahlibx) / [LinkedIn](https://www.linkedin.com/in/sarahsmithdeveloper/)
 - Conor: [GitHub](https://github.com/conorwburke) / [LinkedIn](https://www.linkedin.com/in/conor-burke-phd-725756231/)
@@ -40,7 +76,3 @@ coding!
 - Francisco: [GitHub](https://github.com/fcuevas6) / [LinkedIn](https://www.linkedin.com/in/francisco-cuevas-designer/)
 - Jehovangi P [Github](https://github.com/jp249)
 - Andy: [Github](https://github.com/abutler911)
-- 
-   ...
-
-- Teammate name #n: [GitHub](https://github.com/ghaccountname) / [LinkedIn](https://linkedin.com/in/liaccountname)
