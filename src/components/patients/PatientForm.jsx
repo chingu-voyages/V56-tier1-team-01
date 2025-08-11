@@ -129,7 +129,7 @@ export default function PatientForm() {
           }
 
           setFormData({
-            status: "checkedIn",
+            status: "Checked In",
             firstName: "",
             lastName: "",
             address: "",

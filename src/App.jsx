@@ -78,6 +78,7 @@ function App() {
             }
           />
         </Routes>
+        <Footer />
       </BrowserRouter>
     </PatientProvider>
     </AuthProvider>
