@@ -24,7 +24,9 @@ function App() {
             element={
               <MainLayout>
                 <LoginForm />
-              </MainLayout>} />
+              </MainLayout>
+              } 
+          />
           <Route
             path='/'
             element={
@@ -78,7 +80,6 @@ function App() {
             }
           />
         </Routes>
-        <Footer />
       </BrowserRouter>
     </PatientProvider>
     </AuthProvider>
