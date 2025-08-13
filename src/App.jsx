@@ -6,12 +6,10 @@ import PatientInfoPage from "./pages/PatientInfoPage.jsx";
 import PatientStatusUpdate from "./pages/PatientStatusUpdate.jsx";
 import PatientStatus from "./pages/PatientStatus.jsx";
 import LoginForm from "./pages/LoginForm";
-import { AuthProvider } from "./AuthProvider";
-import ProtectedRoute from "./ProtectedRoute";
+import { AuthProvider } from "./context/AuthProvider";
+import ProtectedRoute from "./context/ProtectedRoute";
 import AdminHome from "./pages/AdminHome.jsx";
 import STMHome from "./pages/STMHome.jsx";
-import Header from "./components/layout/Header.jsx";
-import Footer from "./components/layout/Footer.jsx";
 import { PatientProvider } from "./context/PatientProvider";
 import MainLayout from './components/layout/MainLayout.jsx';
 
@@ -21,6 +19,14 @@ function App() {
     <PatientProvider>
       <BrowserRouter>
         <Routes>
+          <Route
+            path="/login"
+            element={
+              <MainLayout>
+                <LoginForm />
+              </MainLayout>
+              } 
+          />
           <Route
             path='/'
             element={
@@ -33,7 +39,9 @@ function App() {
             path='/patient-information'
             element={
               <MainLayout>
-                <PatientInfoPage />
+                <ProtectedRoute>
+                  <PatientInfoPage />
+                </ProtectedRoute>
               </MainLayout>
             }
           />
@@ -41,7 +49,9 @@ function App() {
             path='/patient-status-update'
             element={
               <MainLayout>
-                <PatientStatusUpdate />
+                <ProtectedRoute>
+                  <PatientStatusUpdate />
+                </ProtectedRoute>
               </MainLayout>
             }
           />

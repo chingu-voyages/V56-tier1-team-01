@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 // This component serves as the home page for surgical team members
 // Attempted to incorporate the comments on the Figma design into the page but not sure if it is correct
 
@@ -14,16 +14,16 @@ export default function STMHome() {
         Use the options below to proceed.
       </p>
 
-      <div className='space-y-6 w-full max-w-sm'>
+      <div className="space-y-6 w-full max-w-sm">
         <Link
-          to='/patient-status-update'
-          className='block w-full text-center px-6 py-3 bg-black text-white rounded-md shadow hover:bg-gray-200 hover:text-black transition-colors'
+          to="/patient-status-update"
+          className="block w-full text-center px-6 py-3 bg-black text-white rounded-md shadow hover:bg-gray-200 hover:text-black transition-colors"
         >
           Update Patient Status
         </Link>
         <Link
-          to='/patient-status'
-          className='block w-full text-center px-6 py-3 border border-gray-300 text-black rounded-md shadow hover:bg-gray-100 transition-colors'
+          to="/patient-status"
+          className="block w-full text-center px-6 py-3 border border-gray-300 text-black rounded-md shadow hover:bg-gray-100 transition-colors"
         >
           View Patient Statuses
         </Link>

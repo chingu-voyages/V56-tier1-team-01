@@ -11,17 +11,17 @@ export default function AdminHome() {
                 <Link
                     to='/patient-information'
                     className='block text-center px-6 py-3 bg-black text-white rounded-lg shadow hover:bg-gray-200 hover:text-black transition-colors'>
-                        Add New Patient
-                </Link>
-                <Link
-                    to='' //It occurs to me we don't actually have a different page for updating patient information. Is that something we'll need to build out, or is that functionality something we'll build into the patient-information page?
-                    className='block text-center px-6 py-3 bg-gray-200 text-black rounded-lg shadow hover:bg-gray-300 transition-colors'>
-                        Update Existing Patient Information
+                        Add New Patient / Update Patient Info
                 </Link>
                 <Link
                     to='/patient-status-update'
-                    className='block text-center px-6 py-3 border border-gray-300 text-black rounded-lg shadow hover:bg-gray-100 transition-colors'>
+                    className='block text-center px-6 py-3 bg-gray-200 text-black rounded-lg shadow hover:bg-gray-300 transition-colors'>
                         Update Existing Patient Status
+                </Link>
+                <Link
+                    to='/patient-status'
+                    className='block text-center px-6 py-3 border border-gray-300 text-black rounded-lg shadow hover:bg-gray-100 transition-colors'>
+                        View Patient Statuses
                 </Link>
             </div>
         </div>
