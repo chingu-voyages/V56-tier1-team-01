@@ -32,6 +32,7 @@ import { LogOut } from 'lucide-react';
 import { useAuth } from '@/context/AuthProvider';
 import { displayDate } from "./headerUtils.js" 
 
+
 // Add mobile navigation and resposive design
 
 export default function Header() {
