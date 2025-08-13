@@ -6,34 +6,80 @@ import PatientInfoPage from "./pages/PatientInfoPage.jsx";
 import PatientStatusUpdate from "./pages/PatientStatusUpdate.jsx";
 import PatientStatus from "./pages/PatientStatus.jsx";
 import LoginForm from "./pages/LoginForm";
-import { AuthProvider } from "./AuthProvider";
-import ProtectedRoute from "./ProtectedRoute";
+import { AuthProvider } from "./context/AuthProvider";
+import ProtectedRoute from "./context/ProtectedRoute";
 import AdminHome from "./pages/AdminHome.jsx";
 import STMHome from "./pages/STMHome.jsx";
-import Header from "./components/layout/Header.jsx";
-import Footer from "./components/layout/Footer.jsx";
 import { PatientProvider } from "./context/PatientProvider";
-
+import MainLayout from './components/layout/MainLayout.jsx';
 
 function App() {
   return (
     <AuthProvider>
     <PatientProvider>
       <BrowserRouter>
-        <Header />
         <Routes>
-          <Route path='/' element={<LandingPage />} />
-          <Route path="/login" element={<LoginForm />} />
-          <Route path='/patient-information' element={<ProtectedRoute requiredAccess={"admin"}><PatientInfoPage /></ProtectedRoute>} />
+          <Route
+            path="/login"
+            element={
+              <MainLayout>
+                <LoginForm />
+              </MainLayout>
+              } 
+          />
+          <Route
+            path='/'
+            element={
+              <MainLayout>
+                <LandingPage />
+              </MainLayout>
+            }
+          />
+          <Route
+            path='/patient-information'
+            element={
+              <MainLayout>
+                <ProtectedRoute>
+                  <PatientInfoPage />
+                </ProtectedRoute>
+              </MainLayout>
+            }
+          />
           <Route
             path='/patient-status-update'
-            element={<ProtectedRoute><PatientStatusUpdate /></ProtectedRoute>}
+            element={
+              <MainLayout>
+                <ProtectedRoute>
+                  <PatientStatusUpdate />
+                </ProtectedRoute>
+              </MainLayout>
+            }
           />
-          <Route path='/patient-status' element={<PatientStatus />} />
-          <Route path='/admin-home' element={<AdminHome />} />
-          <Route path='/stm-home' element={<STMHome />} />
+          <Route
+            path='/patient-status'
+            element={
+              <MainLayout>
+                <PatientStatus />
+              </MainLayout>
+            }
+          />
+          <Route
+            path='/admin-home'
+            element={
+              <MainLayout>
+                <AdminHome />
+              </MainLayout>
+            }
+          />
+          <Route
+            path='/stm-home'
+            element={
+              <MainLayout>
+                <STMHome />
+              </MainLayout>
+            }
+          />
         </Routes>
-        <Footer />
       </BrowserRouter>
     </PatientProvider>
     </AuthProvider>
