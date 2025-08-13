@@ -53,8 +53,8 @@ export default function PatientStatusUpdate() {
   };
 
   return (
-    <div className="px-4 sm:px-6 md:px-8">
-      <h1 className="text-2xl font-bold text-gray-900 text-center mt-16 mb-8">
+    <div>
+      <h1 className="text-2xl font-bold text-gray-900 text-center mb-8">
         Patient Status Update
       </h1>
 

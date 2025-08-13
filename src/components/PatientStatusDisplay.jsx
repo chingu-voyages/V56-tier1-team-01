@@ -80,7 +80,7 @@ function PatientStatusDisplay() {
   const patientsToShow = sortedPatients.slice(startIdx, endIdx);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
+    <div className="flex flex-col items-center justify-center min-h-96">
 
       <div className="w-full max-w-md">
         <div className="flex font-bold border-b mb-2">

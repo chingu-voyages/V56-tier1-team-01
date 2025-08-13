@@ -5,11 +5,11 @@ import { Link } from 'react-router-dom';
 
 export default function STMHome() {
   return (
-    <div className='min-h-screen flex flex-col items-center justify-center p-6 bg-gray-50'>
-      <h1 className='text-4xl font-bold text-gray-900 text-center mt-16 mb-4'>
+    <div className='flex flex-col items-center justify-center'>
+      <h1 className='text-4xl font-bold text-gray-900 text-center mb-10'>
         Welcome Surgical Team Member!
       </h1>
-      <p className='text-center text-gray-700 mb-10 max-w-md'>
+      <p className='text-gray-900 mb-10 max-w-2xl text-center font-bold text-lg'>
         This page allows you to update a patient’s status or view all patients.
         Use the options below to proceed.
       </p>

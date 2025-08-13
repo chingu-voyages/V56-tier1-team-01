@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 
 export default function AdminHome() {
     return (
-        <div className='min-h-screen flex flex-col items-center justify-center bg-gray-50 p-6'>
+        <div className='flex flex-col items-center justify-center'>
             <h1 className='text-4xl font-bold mb-10'>Welcome Admin!</h1>
             <p className='text-gray-900 mb-10 max-w-2xl text-center font-bold text-lg'>This page allows you to add a new patient into this system, update existing patient information, and update the surgery status of a patient.</p>
-            <p className='text-gray-600 mt-10 mb-10 text-sm' >What would you like to do?</p>
+            <p className='text-gray-600  mb-10 text-sm' >What would you like to do?</p>
             <div className='flex flex-col items-center gap-5'>
                 <Link
                     to='/patient-information'
