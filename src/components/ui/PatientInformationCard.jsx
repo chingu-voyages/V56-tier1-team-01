@@ -8,12 +8,21 @@ import {
 } from "@/components/ui/card";
 
 export default function PatientInformationCard({ patient }) {
+  const formatStatus = (status) => {
+    if (!status) return "N/A";
+
+    // split camelCase into words
+    const spaced = status.replace(/([a-z])([A-Z])/g, "$1 $2");
+
+    // Capitalize only the first letter of each word
+    return spaced.replace(/\b\w/g, (char) => char.toUpperCase());
+  };
   const safePatient = patient || {};
   const displayPatient = {
     firstName: safePatient.firstName || "N/A",
     lastName: safePatient.lastName || "N/A",
     patientNumber: safePatient.id || "N/A",
-    status: safePatient.status || "N/A",
+    status: formatStatus(safePatient.status || "N/A"),
     address: `${safePatient.address || "N/A"}, ${safePatient.city || "N/A"}, ${
       safePatient.state || "N/A"
     }`,
