@@ -19,14 +19,14 @@ export default function PatientInformationCard({ patient }) {
   };
   const safePatient = patient || {};
   const displayPatient = {
-    firstName: safePatient.firstName || "N/A",
-    lastName: safePatient.lastName || "N/A",
-    patientNumber: safePatient.id || "N/A",
-    status: formatStatus(safePatient.status || "N/A"),
-    address: `${safePatient.address || "N/A"}, ${safePatient.city || "N/A"}, ${
-      safePatient.state || "N/A"
+    firstName: safePatient.firstName || "--",
+    lastName: safePatient.lastName || "--",
+    patientNumber: safePatient.id || "--",
+    status: formatStatus(safePatient.status || "--"),
+    address: `${safePatient.address || "--"}, ${safePatient.city || "--"}, ${
+      safePatient.state || "--"
     }`,
-    telephone: safePatient.phone || "N/A",
+    telephone: safePatient.phone || "--",
   };
   return (
     <Card className="shadow-sm text-slate-800">
