@@ -105,7 +105,7 @@ export default function PatientStatusUpdate() {
             </div>
 
             <button
-              className="place-self-center w-6/12 px-4 py-2 bg-black text-white rounded-md shadow-sm hover:bg-gray-200 hover:text-black transition-colors"
+              className="place-self-center w-6/12 px-4 py-2 bg-slate-800 text-white rounded-md shadow-sm hover:bg-gray-200 hover:text-black transition-colors"
               onClick={() => {
                 if (!newStatus || !foundPatient?.id) {
                   setError("Please select a patient and a new status.");
