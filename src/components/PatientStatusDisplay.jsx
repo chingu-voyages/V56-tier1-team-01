@@ -149,7 +149,9 @@ function PatientStatusDisplay() {
           <span className="text-sm text-gray-500 mb-2">
             Page {currentPage + 1} of {Math.max(1, Math.ceil(patientCurrentStatus.length / patientsPerPage))}
           </span>
+
           {/* Refreshes patient list from localStorage*/}
+          
           <button
             className="mb-2 px-3 py-1 rounded shadow-sm transition-colors bg-gray-400 text-white hover:bg-blue-700 hover:text-white"
             onClick={() => {
