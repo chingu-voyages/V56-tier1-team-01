@@ -39,11 +39,11 @@ export default function Header() {
   const { isAuthenticated, userAccess, logout } = useAuth();
   return (
     <nav className="flex items-center justify-between px-6 lg:-px-0 pt-6 pb-3 border-b bg-white shadow-xs transition-all duration-300">
-      <div className="flex flex-col gap-2 justify-start lg:flex-row lg:gap-8">
+      <div className="flex flex-col gap-2 justify-start lg:flex-row lg:gap-6">
         <h1 className="text-2xl font-bold text-slate-800 transform hover:scale-105 transition-transform duration-200 cursor-default self-center">
           <Link to="/">Surgery Status Board</Link>
         </h1>
-        <p className="self-start lg:self-center text-slate-600 text-sm">{displayDate}</p>
+        <p className="self-start lg:self-center mt-1 text-slate-600 text-sm">{displayDate}</p>
        </div>
       <div className="hidden customMd:block transition-opacity duration-300">
         <NavigationMenu>
