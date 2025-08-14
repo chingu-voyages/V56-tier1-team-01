@@ -61,7 +61,6 @@ export default function PatientForm() {
       console.error("Failed to parse patients from localStorage:", error)
       return
     }
-    console.log(patients)
     let newID = generatePatientID()
     while (patients.hasOwnProperty(newID)) {
       newID = generatePatientID()
