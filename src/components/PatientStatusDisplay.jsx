@@ -149,34 +149,55 @@ function PatientStatusDisplay() {
           <span className="text-sm text-gray-500 mb-2">
             Page {currentPage + 1} of {Math.max(1, Math.ceil(patientCurrentStatus.length / patientsPerPage))}
           </span>
-          <div>
-            <button
-              className="mx-1 px-3 py-1 rounded shadow-sm transition-colors bg-green-700 text-white hover:bg-blue-700 hover:text-white"
-              onClick={() => {
-                setCurrentPage(prev =>
-                  prev === 0
-                    ? Math.ceil(patientCurrentStatus.length / patientsPerPage) - 1
-                    : prev - 1
-                );
-                setUserChangedPage(true);
-              }}
-            >
-              Previous Page
-            </button>
-            <button
-              className="mx-1 px-3 py-1 rounded shadow-sm transition-colors bg-green-700 text-white hover:bg-blue-700 hover:text-white"
-              onClick={() => {
-                setCurrentPage(prev =>
-                  prev >= Math.ceil(patientCurrentStatus.length / patientsPerPage) - 1
-                    ? 0
-                    : prev + 1
-                );
-                setUserChangedPage(true);
-              }}
-            >
-              Next Page
-            </button>
-          </div>
+          {/* Refreshes patient list from localStorage*/}
+          <button
+            className="mb-2 px-3 py-1 rounded shadow-sm transition-colors bg-gray-400 text-white hover:bg-blue-700 hover:text-white"
+            onClick={() => {
+              const patientsString = localStorage.getItem("patients");
+              if (patientsString) {
+                try {
+                  const patientsObj = JSON.parse(patientsString);
+                  setPatientCurrentStatus(Object.values(patientsObj));
+                } catch {
+                  setPatientCurrentStatus([]);
+                }
+              } else {
+                setPatientCurrentStatus([]);
+              }
+            }}
+          >
+            Refresh
+          </button>
+          {Math.ceil(patientCurrentStatus.length / patientsPerPage) > 1 && (
+            <div>
+              <button
+                className="mx-1 px-3 py-1 rounded shadow-sm transition-colors bg-green-700 text-white hover:bg-blue-700 hover:text-white"
+                onClick={() => {
+                  setCurrentPage(prev =>
+                    prev === 0
+                      ? Math.ceil(patientCurrentStatus.length / patientsPerPage) - 1
+                      : prev - 1
+                  );
+                  setUserChangedPage(true);
+                }}
+              >
+                Previous Page
+              </button>
+              <button
+                className="mx-1 px-3 py-1 rounded shadow-sm transition-colors bg-green-700 text-white hover:bg-blue-700 hover:text-white"
+                onClick={() => {
+                  setCurrentPage(prev =>
+                    prev >= Math.ceil(patientCurrentStatus.length / patientsPerPage) - 1
+                      ? 0
+                      : prev + 1
+                  );
+                  setUserChangedPage(true);
+                }}
+              >
+                Next Page
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
