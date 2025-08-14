@@ -104,7 +104,7 @@ export default function PatientForm() {
         Add or Update Patient Information
       </h2>
       <div className="mb-6">
-        <h3 className="text-lg font-normal text-center mb-2">
+        <h3 className="text-sm sm:text-lg font-normal text-center mb-2">
           Use the Search Bar below to find and update existing patient
           information
         </h3>

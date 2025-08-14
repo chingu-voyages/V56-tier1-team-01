@@ -53,8 +53,8 @@ export default function PatientStatusUpdate() {
   };
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold text-gray-900 text-center mb-8">
+    <div className="max-w-6xl mx-auto px-2">
+      <h1 className="text-2xl font-bold text-slate-800 text-center mb-8">
         Patient Status Update
       </h1>
 
@@ -68,10 +68,10 @@ export default function PatientStatusUpdate() {
         </div>
 
         <div>
-          <div className="flex flex-initial flex-col space-y-4">
+          <div className="flex flex-initial flex-col items-center space-y-4">
             <div className="flex items-center mb-4">
-              <label className="w-32 text-sm font-medium text-gray-700">
-                Current Status
+              <label className="w-32 text-sm font-medium text-slate-800">
+                Current Status:
               </label>
               <input
                 type="text"
@@ -82,8 +82,8 @@ export default function PatientStatusUpdate() {
             </div>
 
             <div className="flex items-center mb-4">
-              <label className="w-32 text-sm font-medium text-gray-700">
-                New Status
+              <label className="w-32 text-sm font-medium text-slate-800">
+                New Status:
               </label>
               <select
                 id="dropdown"
