@@ -65,7 +65,7 @@ export default function PatientForm() {
     if (!formData.address.trim())
       newErrors.address = "Street address is required";
     if (!formData.city.trim()) newErrors.city = "City is required";
-    if (!formData.state.trim()) newErrors.state = "State is required";
+    if (!formData.state.trim()) newErrors.state = "State, region, or province is required";
     if (!formData.country.trim()) newErrors.country = "Country is required";
 
     if (!formData.email.trim()) {
