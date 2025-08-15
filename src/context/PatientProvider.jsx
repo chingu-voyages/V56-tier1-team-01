@@ -44,14 +44,11 @@ export function PatientProvider({ children }) {
     });
   };
 
-  // Function to update patient information by ID
-  const updatePatient = (id, updatedData) => {
+  // Update a patient: pass the full patient object
+  const updatePatient = (updatedPatient) => {
     setPatients((prev) => ({
       ...prev,
-      [id]: {
-        ...prev[id],
-        ...updatedData,
-      },
+      [updatedPatient.id]: updatedPatient,
     }));
   };
 
