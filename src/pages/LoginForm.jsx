@@ -74,8 +74,8 @@ export default function LoginForm() {
     }, [isAuthenticated, userAccess, navigate])
 
     return (
-        <main className="min-h-screen flex flex-col items-center justify-center">
-            <section className="max-w-xl w-full text-center border border-gray-200 p-8 rounded-lg shadow-md sm:p-10">
+        <main className="flex flex-col items-center justify-center">
+            <section className="max-w-xl w-full text-center border border-gray-200 rounded-lg shadow-md sm:p-10">
                 <p className="max-w-sm m-auto pt-10 pb-12">
                     To enter a new patient into this system or to update 
                     the status of an existing patient please enter your 

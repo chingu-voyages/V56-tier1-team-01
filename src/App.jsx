@@ -25,7 +25,7 @@ function App() {
               <MainLayout>
                 <LoginForm />
               </MainLayout>
-              } 
+              }
           />
           <Route
             path='/'

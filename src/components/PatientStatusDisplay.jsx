@@ -108,9 +108,8 @@ function PatientStatusDisplay() {
   }, [patientCurrentStatus]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="w-full max-w-lg bg-white rounded-lg shadow-lg p-8">
-        {/* main content */}
+    <div className="flex flex-col items-center justify-center min-h-96">
+      <div className="w-full max-w-md">
         <div className="flex font-bold border-b mb-2">
           <div className="w-1/2 text-center">Patient No.</div>
           <div className="w-1/2 text-center">Patient Current Status</div>
