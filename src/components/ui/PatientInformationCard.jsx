@@ -19,25 +19,25 @@ export default function PatientInformationCard({ patient }) {
   };
   const safePatient = patient || {};
   const displayPatient = {
-    firstName: safePatient.firstName || "N/A",
-    lastName: safePatient.lastName || "N/A",
-    patientNumber: safePatient.id || "N/A",
-    status: formatStatus(safePatient.status || "N/A"),
-    address: `${safePatient.address || "N/A"}, ${safePatient.city || "N/A"}, ${
-      safePatient.state || "N/A"
+    firstName: safePatient.firstName || "--",
+    lastName: safePatient.lastName || "--",
+    patientNumber: safePatient.id || "--",
+    status: formatStatus(safePatient.status || "--"),
+    address: `${safePatient.address || "--"}, ${safePatient.city || "--"}, ${
+      safePatient.state || "--"
     }`,
-    telephone: safePatient.phone || "N/A",
+    telephone: safePatient.phone || "--",
   };
   return (
-    <Card>
+    <Card className="shadow-sm text-slate-800">
       <CardHeader>
-        <CardTitle>Patient Information</CardTitle>
+        <CardTitle className="text-xl">Patient Information</CardTitle>
         <CardDescription>
           Quickly view key patient details to support timely updates and
           decisions
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex flex-col items-center text-left">
+      <CardContent className="flex flex-col items-center text-left text-slate-800">
         <p>
           Patient: {displayPatient.firstName} {displayPatient.lastName}
         </p>

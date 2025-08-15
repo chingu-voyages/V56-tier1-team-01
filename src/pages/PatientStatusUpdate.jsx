@@ -52,8 +52,8 @@ export default function PatientStatusUpdate() {
   };
 
   return (
-    <div className="min-h-screen px-4 sm:px-6 md:px-8">
-      <h1 className="text-2xl font-bold text-gray-900 text-center mt-16 mb-8">
+    <div className="max-w-6xl mx-auto">
+      <h1 className="text-2xl font-bold text-slate-800 text-center mb-8">
         Patient Status Update
       </h1>
 
@@ -61,15 +61,15 @@ export default function PatientStatusUpdate() {
         <SearchBar onPatientFound={setFoundPatient} />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         <div>
           <PatientInformationCard patient={foundPatient} />
         </div>
 
-        <div className="flex flex-col space-y-4">
-          <div className="flex items-center mb-4">
-            <label className="w-32 text-sm font-medium text-gray-700">
-              Current Status
+        <div className="flex flex-initial flex-col items-center gap-6">
+          <div className="flex items-center md:flex-row flex-col">
+            <label className="md:w-32 text-sm md:text-center font-medium text-slate-800">
+              Current Status:
             </label>
             <input
               type="text"
@@ -84,9 +84,12 @@ export default function PatientStatusUpdate() {
               New Status
             </label>
             <select
+              id="dropdown"
               className="w-64 px-3 py-2 border border-gray-300 rounded-md"
               value={newStatus}
-              onChange={(e) => setNewStatus(e.target.value)}
+              onChange={(event) => {
+                setNewStatus(event.target.value);
+              }}
             >
               <option value="" disabled>
                 -- Select a new status --
@@ -100,8 +103,38 @@ export default function PatientStatusUpdate() {
           </div>
 
           <button
-            className="place-self-center w-6/12 px-4 py-2 bg-black text-white rounded-md shadow-sm hover:bg-gray-200 hover:text-black transition-colors"
-            onClick={handleUpdateStatus}
+            className="px-4 py-2 bg-slate-800 text-white rounded-md shadow-sm hover:bg-gray-200 hover:text-black transition-colors"
+            onClick={() => {
+              if (!newStatus || !foundPatient?.id) {
+                setError("Please select a patient and a new status.");
+                return;
+              }
+
+              const currentIndex = STATUS_ORDER.indexOf(foundPatient.status);
+              const newIndex = STATUS_ORDER.indexOf(newStatus);
+
+              if (newIndex === currentIndex) {
+                setError("The new status is the same as the current status.");
+                return;
+              }
+
+              if (Math.abs(newIndex - currentIndex) !== 1) {
+                setError("You can only move one step forward or backward.");
+                return;
+              }
+
+              const updatedPatient = updatePatientStatus(
+                foundPatient.id,
+                newStatus
+              );
+              if (updatedPatient) {
+                setFoundPatient(updatedPatient);
+                setNewStatus("");
+                setError("");
+              } else {
+                setError("Failed to update patient status.");
+              }
+            }}
           >
             Update Existing Patient Status
           </button>
@@ -111,7 +144,7 @@ export default function PatientStatusUpdate() {
           )}
 
           <button
-            className="place-self-center w-24 px-4 py-2 bg-red-600 text-white rounded-md shadow-sm hover:bg-red-400 hover:text-black transition-colors mt-4"
+            className="px-4 py-2 bg-red-600 text-white text-center rounded-md shadow-sm hover:bg-red-400 hover:text-black transition-colors"
             onClick={() => {
               setFoundPatient(null);
               setNewStatus("");
