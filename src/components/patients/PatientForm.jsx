@@ -99,12 +99,12 @@ export default function PatientForm() {
   }
 
   return (
-    <div className="bg-white shadow-md rounded-lg p-6 sm:p-8 max-w-lg sm:max-w-2xl w-full mx-auto">
-      <h2 className="text-xl font-bold mb-6 text-center">
+    <div className="bg-white shadow-md rounded-lg border border-slate-200 p-6 sm:p-8 max-w-lg sm:max-w-2xl w-full mx-auto text-slate-800">
+      <h2 className="text-2xl font-bold mb-6 text-center">
         Add or Update Patient Information
       </h2>
       <div className="mb-6">
-        <h3 className="text-lg font-normal text-center mb-2">
+        <h3 className="text-sm sm:text-lg font-normal text-center mb-2">
           Use the Search Bar below to find and update existing patient
           information
         </h3>
@@ -160,7 +160,7 @@ export default function PatientForm() {
             }
           >
             <div className="flex items-center space-x-2">
-              <RadioGroupItem value="checkedIn" id="checkedIn" />
+              <RadioGroupItem value="checkedIn" id="checkedIn"/>
               <Label htmlFor="checkedIn">Checked In</Label>
             </div>
           </RadioGroup>
@@ -318,7 +318,7 @@ export default function PatientForm() {
           >
             Cancel
           </Button>
-          <Button type="submit">
+          <Button type="submit" className="bg-slate-800">
             {selectedPatient ? "Update Patient" : "Add New Patient"}
           </Button>
         </div>
