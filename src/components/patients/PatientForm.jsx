@@ -28,7 +28,7 @@ export default function PatientForm() {
     address: "",
     city: "",
     state: "",
-    country: "United States",
+    country: "",
     phone: "",
     email: "",
   });
@@ -45,7 +45,7 @@ export default function PatientForm() {
       address: patient.address || "",
       city: patient.city || "",
       state: patient.state || "",
-      country: patient.country || "United States",
+      country: patient.country || "",
       phone: patient.phone || "",
       email: patient.email || "",
     });
@@ -65,7 +65,7 @@ export default function PatientForm() {
     if (!formData.address.trim())
       newErrors.address = "Street address is required";
     if (!formData.city.trim()) newErrors.city = "City is required";
-    if (!formData.state.trim()) newErrors.state = "State is required";
+    if (!formData.state.trim()) newErrors.state = "State, region, or province is required";
     if (!formData.country.trim()) newErrors.country = "Country is required";
 
     if (!formData.email.trim()) {
@@ -135,7 +135,7 @@ export default function PatientForm() {
             address: "",
             city: "",
             state: "",
-            country: "United States",
+            country: "",
             phone: "",
             email: "",
           });
@@ -229,25 +229,16 @@ export default function PatientForm() {
         </div>
 
         <div className="mb-4">
-          <Label htmlFor="state">State</Label>
-          <Select
+          <Label htmlFor="state">State, Province, or Region</Label>
+          <Input
+            id="state"
             name="state"
+            placeholder="New York"
             value={formData.state}
-            onValueChange={(value) =>
-              setFormData({ ...formData, state: value })
+            onChange={(e) =>
+              setFormData({ ...formData, state: e.target.value })
             }
-          >
-            <SelectTrigger id="state">
-              <SelectValue placeholder="Select State" />
-            </SelectTrigger>
-            <SelectContent>
-              {US_STATES.map((state) => (
-                <SelectItem key={state.code} value={state.code}>
-                  {state.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          />
           {errors.state && (
             <p className="text-sm text-red-500 mt-1">{errors.state}</p>
           )}
@@ -257,6 +248,8 @@ export default function PatientForm() {
           <Label htmlFor="country">Country</Label>
           <Input
             id="country"
+            name="country"
+            placeholder="United States"
             value={formData.country}
             onChange={(e) =>
               setFormData({ ...formData, country: e.target.value })
@@ -315,7 +308,7 @@ export default function PatientForm() {
                 address: "",
                 city: "",
                 state: "",
-                country: "United States",
+                country: "",
                 phone: "",
                 email: "",
               });
