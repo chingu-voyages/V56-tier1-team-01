@@ -1,30 +1,6 @@
 import React, { useRef, useEffect, useState } from "react"
 
-// Function updateStatusById(id, newStatus) will update patient with matching ID
-// Function addPatientStatus(newId, newStatus) will add new patient to list
-// Function removePatientStatus(idToRemove) will remove patient from list
 
-const HARDCODED_PATIENTS = [
-  {id:'HCWB24', status:'Checked In'},
-  {id:'5TG55', status:'Pre-Procedure'},
-  {id:'UD5XV', status:'In-Progress'},
-  {id:'2BN87', status:'Closing'},
-  {id:'FFY95', status:'Closing'},
-  {id:'KH358', status:'Recovery'},
-  {id:'OI84D', status:'Complete'},
-  {id:'PBB2GV', status:'In-Progress'},
-  {id:'J9C54', status:'Recovery'},
-  {id:'ZMVCI', status:'In-Progress'},
-  {id:'XPMKQ', status:'Checked In'},
-  {id:'Y9V1O', status:'Recovery'},
-  {id:'VO414', status:'Complete'},
-  {id:'3D9FF', status:'Dismissal'},
-  {id:'7622A', status:'Pre-Procedure'},
-  {id:'A7C9Q', status:'In-Progress'},
-  {id:'3P2M6', status:'Checked In'},
-  {id:'X8T1F', status:'Dismissal'},
-  {id:'R6N3W', status:'Pre-Procedure'},
-];
 
 const STATUS_LABELS = {
   checkedIn: "Checked In",
@@ -36,28 +12,20 @@ const STATUS_LABELS = {
   dismissal: "Dismissal",
 };
 
-function mergePatients(hardcoded, fromStorage) {
-  // Use a map to merge by id, storage takes priority
-  const map = {};
-  hardcoded.forEach(p => { map[p.id] = p; });
-  fromStorage.forEach(p => { map[p.id] = p; });
-  return Object.values(map);
-}
 
 function PatientStatusDisplay() {
-  // Load from localStorage and merge with hardcoded list
+  // Load from localStorage
   const [patientCurrentStatus, setPatientCurrentStatus] = useState(() => {
     const patientsString = localStorage.getItem("patients");
     if (patientsString) {
       try {
         const patientsObj = JSON.parse(patientsString);
-        const fromStorage = Object.values(patientsObj);
-        return mergePatients(HARDCODED_PATIENTS, fromStorage);
+        return Object.values(patientsObj);
       } catch {
-        return [...HARDCODED_PATIENTS];
+        return [];
       }
     }
-    return [...HARDCODED_PATIENTS];
+    return [];
   });
 
   // Save to localStorage on change
@@ -73,36 +41,13 @@ function PatientStatusDisplay() {
   const patientsPerPage = 7
   const listContainerRef = useRef(null)
 
-  function updateStatusById(id, newStatus) {
-    setPatientCurrentStatus(prev =>
-      prev.map(obj =>
-        obj.id === id ? { ...obj, status: newStatus } : obj
-      )
-    );
-  }
 
-  function addPatientStatus(newId, newStatus) {
-    setPatientCurrentStatus(prev => {
-      const exists = prev.find(p => p.id === newId);
-      if (exists) {
-        // Update status if patient exists
-        return prev.map(p => p.id === newId ? { ...p, status: newStatus } : p);
-      }
-      // Otherwise, add new patient
-      return [...prev, { id: newId, status: newStatus }];
-    });
-  }
-
-  function removePatientStatus(idToRemove) {
-    setPatientCurrentStatus(prev => prev.filter(obj => obj.id !== idToRemove));
-  }
 
   // Track if user has manually changed the page
   const [userChangedPage, setUserChangedPage] = useState(false);
 
   // Auto-scroll pages every 20 seconds, unless user changed page
   useEffect(() => {
-    if (userChangedPage) return; // Stop timer if user changed page
 
     const totalPages = Math.ceil(patientCurrentStatus.length / patientsPerPage);
     if (totalPages <= 1) return;
@@ -204,34 +149,57 @@ function PatientStatusDisplay() {
           <span className="text-sm text-gray-500 mb-2">
             Page {currentPage + 1} of {Math.max(1, Math.ceil(patientCurrentStatus.length / patientsPerPage))}
           </span>
-          <div>
-            <button
-              className="mx-1 px-3 py-1 rounded bg-gray-200 text-gray-700 disabled:opacity-50"
-              onClick={() => {
-                setCurrentPage(prev =>
-                  prev === 0
-                    ? Math.ceil(patientCurrentStatus.length / patientsPerPage) - 1
-                    : prev - 1
-                );
-                setUserChangedPage(true);
-              }}
-            >
-              Previous Page
-            </button>
-            <button
-              className="mx-1 px-3 py-1 rounded bg-gray-200 text-gray-700 disabled:opacity-50"
-              onClick={() => {
-                setCurrentPage(prev =>
-                  prev >= Math.ceil(patientCurrentStatus.length / patientsPerPage) - 1
-                    ? 0
-                    : prev + 1
-                );
-                setUserChangedPage(true);
-              }}
-            >
-              Next Page
-            </button>
-          </div>
+
+          {/* Refreshes patient list from localStorage*/}
+          
+          <button
+            className="mb-2 px-3 py-1 rounded shadow-sm transition-colors bg-gray-400 text-white hover:bg-blue-700 hover:text-white"
+            onClick={() => {
+              const patientsString = localStorage.getItem("patients");
+              if (patientsString) {
+                try {
+                  const patientsObj = JSON.parse(patientsString);
+                  setPatientCurrentStatus(Object.values(patientsObj));
+                } catch {
+                  setPatientCurrentStatus([]);
+                }
+              } else {
+                setPatientCurrentStatus([]);
+              }
+            }}
+          >
+            Refresh
+          </button>
+          {Math.ceil(patientCurrentStatus.length / patientsPerPage) > 1 && (
+            <div>
+              <button
+                className="mx-1 px-3 py-1 rounded shadow-sm transition-colors bg-green-700 text-white hover:bg-blue-700 hover:text-white"
+                onClick={() => {
+                  setCurrentPage(prev =>
+                    prev === 0
+                      ? Math.ceil(patientCurrentStatus.length / patientsPerPage) - 1
+                      : prev - 1
+                  );
+                  setUserChangedPage(true);
+                }}
+              >
+                Previous Page
+              </button>
+              <button
+                className="mx-1 px-3 py-1 rounded shadow-sm transition-colors bg-green-700 text-white hover:bg-blue-700 hover:text-white"
+                onClick={() => {
+                  setCurrentPage(prev =>
+                    prev >= Math.ceil(patientCurrentStatus.length / patientsPerPage) - 1
+                      ? 0
+                      : prev + 1
+                  );
+                  setUserChangedPage(true);
+                }}
+              >
+                Next Page
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
