@@ -52,8 +52,8 @@ export default function PatientStatusUpdate() {
   };
 
   return (
-    <div className="min-h-screen px-4 sm:px-6 md:px-8">
-      <h1 className="text-2xl font-bold text-gray-900 text-center mt-16 mb-8">
+    <div className="max-w-6xl mx-auto">
+      <h1 className="text-2xl font-bold text-slate-800 text-center mb-8">
         Patient Status Update
       </h1>
 
@@ -61,15 +61,15 @@ export default function PatientStatusUpdate() {
         <SearchBar onPatientFound={setFoundPatient} />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         <div>
           <PatientInformationCard patient={foundPatient} />
         </div>
 
-        <div className="flex flex-col space-y-4">
-          <div className="flex items-center mb-4">
-            <label className="w-32 text-sm font-medium text-gray-700">
-              Current Status
+        <div className="flex flex-initial flex-col items-center gap-6">
+          <div className="flex items-center md:flex-row flex-col">
+            <label className="md:w-32 text-sm md:text-center font-medium text-slate-800">
+              Current Status:
             </label>
             <input
               type="text"
@@ -79,8 +79,8 @@ export default function PatientStatusUpdate() {
             />
           </div>
 
-          <div className="flex items-center mb-4">
-            <label className="w-32 text-sm font-medium text-gray-700">
+          <div className="flex items-center md:flex-row flex-col">
+            <label className="md:w-32 text-sm md:text-center font-medium text-slate-800">
               New Status
             </label>
             <select
@@ -100,7 +100,7 @@ export default function PatientStatusUpdate() {
           </div>
 
           <button
-            className="place-self-center w-6/12 px-4 py-2 bg-black text-white rounded-md shadow-sm hover:bg-gray-200 hover:text-black transition-colors"
+            className="px-4 py-2 bg-slate-800 text-white rounded-md shadow-sm hover:bg-gray-200 hover:text-black transition-colors"
             onClick={handleUpdateStatus}
           >
             Update Existing Patient Status
@@ -111,7 +111,7 @@ export default function PatientStatusUpdate() {
           )}
 
           <button
-            className="place-self-center w-24 px-4 py-2 bg-red-600 text-white rounded-md shadow-sm hover:bg-red-400 hover:text-black transition-colors mt-4"
+            className="px-4 py-2 bg-red-600 text-white text-center rounded-md shadow-sm hover:bg-red-400 hover:text-black transition-colors"
             onClick={() => {
               setFoundPatient(null);
               setNewStatus("");

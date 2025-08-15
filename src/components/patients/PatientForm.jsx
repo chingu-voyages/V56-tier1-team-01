@@ -29,7 +29,7 @@ export default function PatientForm() {
     address: "",
     city: "",
     state: "",
-    country: "United States",
+    country: "",
     phone: "",
     email: "",
   });
@@ -46,7 +46,7 @@ export default function PatientForm() {
       address: patient.address || "",
       city: patient.city || "",
       state: patient.state || "",
-      country: patient.country || "United States",
+      country: patient.country || "",
       phone: patient.phone || "",
       email: patient.email || "",
     });
@@ -72,7 +72,8 @@ export default function PatientForm() {
     if (!formData.address.trim())
       newErrors.address = "Street address is required";
     if (!formData.city.trim()) newErrors.city = "City is required";
-    if (!formData.state.trim()) newErrors.state = "State is required";
+    if (!formData.state.trim())
+      newErrors.state = "State, region, or province is required";
     if (!formData.country.trim()) newErrors.country = "Country is required";
 
     if (!formData.email.trim()) {
@@ -106,12 +107,12 @@ export default function PatientForm() {
   }
 
   return (
-    <div className="bg-white shadow-md rounded-lg p-6 sm:p-8 max-w-lg sm:max-w-2xl w-full mx-auto">
-      <h2 className="text-xl font-bold mb-6 text-center">
+    <div className="bg-white shadow-md rounded-lg border border-slate-200 p-6 sm:p-8 max-w-lg sm:max-w-2xl w-full mx-auto text-slate-800">
+      <h2 className="text-2xl font-bold mb-6 text-center">
         Add or Update Patient Information
       </h2>
       <div className="mb-6">
-        <h3 className="text-lg font-normal text-center mb-2">
+        <h3 className="text-sm sm:text-lg font-normal text-center mb-2">
           Use the Search Bar below to find and update existing patient
           information
         </h3>
@@ -153,7 +154,7 @@ export default function PatientForm() {
             address: "",
             city: "",
             state: "",
-            country: "United States",
+            country: "",
             phone: "",
             email: "",
           });
@@ -171,7 +172,6 @@ export default function PatientForm() {
           <Label className="block mb-2">Current Status</Label>
 
           {selectedPatient ? (
-            // Existing patient: show a disabled radio with a nice label (no camelCase)
             <RadioGroup value="readonly" onValueChange={() => {}}>
               <div className="flex items-center space-x-1">
                 <RadioGroupItem value="readonly" id="status-display" disabled />
@@ -181,7 +181,6 @@ export default function PatientForm() {
               </div>
             </RadioGroup>
           ) : (
-            // New patient: keep a functional single radio that sets "checkedIn"
             <RadioGroup
               name="status"
               value={formData.status}
@@ -260,25 +259,16 @@ export default function PatientForm() {
         </div>
 
         <div className="mb-4">
-          <Label htmlFor="state">State</Label>
-          <Select
+          <Label htmlFor="state">State, Province, or Region</Label>
+          <Input
+            id="state"
             name="state"
+            placeholder="New York"
             value={formData.state}
-            onValueChange={(value) =>
-              setFormData({ ...formData, state: value })
+            onChange={(e) =>
+              setFormData({ ...formData, state: e.target.value })
             }
-          >
-            <SelectTrigger id="state">
-              <SelectValue placeholder="Select State" />
-            </SelectTrigger>
-            <SelectContent>
-              {US_STATES.map((state) => (
-                <SelectItem key={state.code} value={state.code}>
-                  {state.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          />
           {errors.state && (
             <p className="text-sm text-red-500 mt-1">{errors.state}</p>
           )}
@@ -288,6 +278,8 @@ export default function PatientForm() {
           <Label htmlFor="country">Country</Label>
           <Input
             id="country"
+            name="country"
+            placeholder="United States"
             value={formData.country}
             onChange={(e) =>
               setFormData({ ...formData, country: e.target.value })
@@ -346,7 +338,7 @@ export default function PatientForm() {
                 address: "",
                 city: "",
                 state: "",
-                country: "United States",
+                country: "",
                 phone: "",
                 email: "",
               });
@@ -356,7 +348,7 @@ export default function PatientForm() {
           >
             Cancel
           </Button>
-          <Button type="submit">
+          <Button type="submit" className="bg-slate-800">
             {selectedPatient ? "Update Patient" : "Add New Patient"}
           </Button>
         </div>

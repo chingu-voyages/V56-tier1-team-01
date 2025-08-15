@@ -1,9 +1,6 @@
 import React, { useRef, useEffect, useState, useContext } from "react";
 import { PatientContext } from "@/context/PatientContext";
 
-// Hardcoded fallback patients
-const HARDCODED_PATIENTS = [{ id: "HCWB24", status: "preProcedure" }];
-
 // Mapping patient status keys to display labels
 const STATUS_LABELS = {
   checkedIn: "Checked In",
@@ -40,14 +37,12 @@ export default function PatientStatusDisplay() {
 
   // Local state for displaying patient statuses (merged with hardcoded)
   const [patientCurrentStatus, setPatientCurrentStatus] = useState(() =>
-    mergePatients(HARDCODED_PATIENTS, Object.values(patients))
+    Object.values(patients)
   );
 
   // Update local display state whenever context patients change
   useEffect(() => {
-    setPatientCurrentStatus(
-      mergePatients(HARDCODED_PATIENTS, Object.values(patients))
-    );
+    setPatientCurrentStatus(Object.values(patients));
   }, [patients]);
 
   const [currentPage, setCurrentPage] = useState(0);
@@ -100,10 +95,10 @@ export default function PatientStatusDisplay() {
   const patientsToShow = sortedPatients.slice(startIdx, endIdx);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="w-full max-w-lg bg-white rounded-lg shadow-lg p-8">
+    <div className="flex flex-col items-center justify-center min-h-96">
+      <div className="w-full max-w-md">
         {/* Header */}
-        <div className="flex font-bold border-b mb-2">
+        <div className="flex font-bold border-b mb-2 text-slate-800">
           <div className="w-1/2 text-center">Patient No.</div>
           <div className="w-1/2 text-center">Patient Current Status</div>
         </div>
@@ -137,7 +132,38 @@ export default function PatientStatusDisplay() {
             })}
           </ul>
         </div>
+        {/* Refreshes patient list from localStorage*/}
 
+        <button
+          className="mb-2 px-3 py-1 rounded shadow-sm transition-colors bg-gray-400 text-white hover:bg-blue-700 hover:text-white"
+          onClick={() => {
+            // Start with context patients
+            let mergedPatients = Object.values(patients);
+
+            // Attempt to load any patients from localStorage
+            const patientsString = localStorage.getItem("patients");
+            if (patientsString) {
+              try {
+                const storedPatientsObj = JSON.parse(patientsString);
+                const storedPatients = Object.values(storedPatientsObj);
+
+                // Merge, giving priority to context patients
+                const map = {};
+                [...storedPatients, ...mergedPatients].forEach((p) => {
+                  map[p.id] = p;
+                });
+                mergedPatients = Object.values(map);
+              } catch {
+                // If parsing fails, just use context patients
+                mergedPatients = Object.values(patients);
+              }
+            }
+
+            setPatientCurrentStatus(mergedPatients);
+          }}
+        >
+          Refresh
+        </button>
         {/* Pagination controls */}
         <div className="flex flex-col items-center justify-center mt-2">
           <span className="text-sm text-gray-500 mb-2">
@@ -149,7 +175,7 @@ export default function PatientStatusDisplay() {
           </span>
           <div>
             <button
-              className="mx-1 px-3 py-1 rounded bg-gray-200 text-gray-700 disabled:opacity-50"
+              className="mx-1 px-3 py-1 rounded shadow-sm transition-colors bg-green-700 text-white hover:bg-blue-700 hover:text-white"
               onClick={() => {
                 setCurrentPage((prev) =>
                   prev === 0
@@ -163,7 +189,7 @@ export default function PatientStatusDisplay() {
               Previous Page
             </button>
             <button
-              className="mx-1 px-3 py-1 rounded bg-gray-200 text-gray-700 disabled:opacity-50"
+              className="mx-1 px-3 py-1 rounded shadow-sm transition-colors bg-green-700 text-white hover:bg-blue-700 hover:text-white"
               onClick={() => {
                 setCurrentPage((prev) =>
                   prev >=
