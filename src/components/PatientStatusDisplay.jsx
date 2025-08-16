@@ -41,7 +41,7 @@ export default function PatientStatusDisplay() {
   const patientsPerPage = 7;
   const listContainerRef = useRef(null);
 
-  // Auto-scroll pages every 20 seconds, unless user changed page
+  // Auto-scroll pages every 20 seconds
   useEffect(() => {
     const totalPages = Math.ceil(patientCurrentStatus.length / patientsPerPage);
     if (totalPages <= 1) return;
