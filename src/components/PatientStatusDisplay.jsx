@@ -23,14 +23,6 @@ const statusColors = {
   Dismissal: "bg-red-200 text-red-800 border-red-300",
 };
 
-// Merge hardcoded patients with context patients
-function mergePatients(hardcoded, fromContext) {
-  const map = {};
-  hardcoded.forEach((p) => (map[p.id] = p));
-  fromContext.forEach((p) => (map[p.id] = p));
-  return Object.values(map);
-}
-
 export default function PatientStatusDisplay() {
   // Access patient data from context
   const { patients } = useContext(PatientContext);
@@ -48,12 +40,9 @@ export default function PatientStatusDisplay() {
   const [currentPage, setCurrentPage] = useState(0);
   const patientsPerPage = 7;
   const listContainerRef = useRef(null);
-  const [userChangedPage, setUserChangedPage] = useState(false);
 
   // Auto-scroll pages every 20 seconds, unless user changed page
   useEffect(() => {
-    if (userChangedPage) return;
-
     const totalPages = Math.ceil(patientCurrentStatus.length / patientsPerPage);
     if (totalPages <= 1) return;
 
@@ -62,7 +51,7 @@ export default function PatientStatusDisplay() {
     }, 20000);
 
     return () => clearInterval(interval);
-  }, [patientCurrentStatus.length, patientsPerPage, userChangedPage]);
+  }, [patientCurrentStatus.length, patientsPerPage]);
 
   // Reset to first page if patient count changes and current page is out of bounds
   useEffect(() => {
@@ -183,7 +172,6 @@ export default function PatientStatusDisplay() {
                       1
                     : prev - 1
                 );
-                setUserChangedPage(true);
               }}
             >
               Previous Page
@@ -197,7 +185,6 @@ export default function PatientStatusDisplay() {
                     ? 0
                     : prev + 1
                 );
-                setUserChangedPage(true);
               }}
             >
               Next Page

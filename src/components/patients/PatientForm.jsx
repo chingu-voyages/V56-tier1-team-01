@@ -3,16 +3,8 @@ import { PatientContext } from "@/context/PatientContext";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { generatePatientID } from "./patientUtils";
-import { US_STATES } from "@/constants/usStates";
 import SearchBar from "@/components/layout/SearchBar";
 
 // Patient information form to collect new patient information and store it in the system, collects basic patient data and generates a patient ID.
@@ -344,6 +336,7 @@ export default function PatientForm() {
               });
               setErrors({});
               setPatientId(generatePatientID());
+              setSelectedPatient(null);
             }}
           >
             Cancel
@@ -354,50 +347,6 @@ export default function PatientForm() {
         </div>
       </form>
 
-      <div className="mt-10 border-t pt-6">
-        <h3 className="text-lg font-semibold mb-4 text-center">
-          Current patients in the system & stored in localStorage
-        </h3>
-        <p className="text-center text-gray-500 mb-4"> TESTING ONLY</p>
-
-        {Object.keys(patients).length === 0 ? (
-          <p className="text-center text-gray-500">
-            No patients in the system yet. Fill out the form and click submit to
-            add a patient
-          </p>
-        ) : (
-          <div className="space-y-4">
-            {Object.values(patients).map((patient) => (
-              <div
-                key={patient.id}
-                className="p-4 bg-gray-50 rounded-lg shadow-sm relative"
-              >
-                <p className="font-bold">
-                  {patient.firstName} {patient.lastName} ({patient.id})
-                </p>
-                <p>Status: {patient.status}</p>
-                <p>Email: {patient.email} </p>
-                <p>Phone: {patient.phone}</p>
-                <p>Address: {patient.address}</p>
-                <p>
-                  {patient.city}, {patient.state}, {patient.country}
-                </p>
-                <p className="text-green-600 font-medium mt-2">
-                  If you see this, Context + useState is working!! This part of
-                  the form will NOT be in the production version. It is just for
-                  testing purposes.
-                </p>
-                <button
-                  onClick={() => removePatient(patient.id)}
-                  className="absolute top-12 right-1 border border-red-500 text-red-500 text-xs px-2 py-1 rounded hover:bg-red-100 transition"
-                >
-                  Remove Patient
-                </button>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
     </div>
   );
 }
