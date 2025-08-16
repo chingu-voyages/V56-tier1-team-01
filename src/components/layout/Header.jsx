@@ -12,16 +12,10 @@ import {
   SheetClose,
 } from '@/components/ui/sheet';
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import {
  DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
   DropdownMenuGroup,
 } from "@/components/ui/dropdown-menu.jsx"
@@ -32,18 +26,19 @@ import { LogOut } from 'lucide-react';
 import { useAuth } from '@/context/AuthProvider';
 import { displayDate } from "./headerUtils.js" 
 
+
 // Add mobile navigation and resposive design
 
 export default function Header() {
   const { isAuthenticated, userAccess, logout } = useAuth();
   return (
-    <nav className="flex items-center justify-between px-6 py-3 border-b bg-white shadow-sm transition-all duration-300">
-      <div className="flex flex-col gap-2 justify-start lg:flex-row lg:gap-8">
-        <h1 className="text-lg font-bold text-gray-900 transform hover:scale-105 transition-transform duration-200 cursor-default self-center">
+    <nav className="flex items-center justify-between px-6 lg:-px-0 pt-6 pb-3 border-b bg-white shadow-xs transition-all duration-300">
+      <div className="flex flex-col justify-start lg:flex-row lg:gap-6">
+        <h1 className="text-2xl font-bold text-slate-800 transform hover:scale-105 transition-transform duration-200 cursor-default self-center">
           <Link to="/">Surgery Status Board</Link>
         </h1>
-        <p className="self-start lg:self-center">{displayDate}</p>
-       </div>
+        <p className="self-start mt-2 text-slate-600 text-sm">{displayDate}</p>
+      </div>
       <div className="hidden customMd:block transition-opacity duration-300">
         <NavigationMenu>
           <NavigationMenuList className='flex space-x-2'>
@@ -54,7 +49,7 @@ export default function Header() {
                 className={({ isActive }) =>
                   `px-4 py-2 rounded-lg transition-all duration-300 ease-in-out transform hover:shadow-md ${
                     isActive
-                      ? 'bg-black text-white shadow-lg scale-105'
+                      ? 'bg-slate-800 text-white shadow-lg scale-105'
                       : 'text-gray-700 hover:bg-gray-100 hover:text-black hover:-translate-y-0.5 hover:scale-105'
                   }`
                 }
@@ -74,7 +69,7 @@ export default function Header() {
                 className={({ isActive }) =>
                   `px-4 py-2 rounded-lg transition-all duration-300 ease-in-out transform hover:shadow-md ${
                     isActive && isAuthenticated && userAccess === 'admin'
-                      ? 'bg-black text-white shadow-lg scale-105'
+                      ? 'bg-slate-800 text-white shadow-lg scale-105'
                       : 'text-gray-700 hover:bg-gray-100 hover:text-black hover:-translate-y-0.5 hover:scale-105'
                   }`
                 }
@@ -89,7 +84,7 @@ export default function Header() {
                 className={({ isActive }) =>
                   `px-4 py-2 rounded-lg transition-all duration-300 ease-in-out transform hover:shadow-md ${
                     isActive && isAuthenticated
-                      ? 'bg-black text-white shadow-lg scale-105'
+                      ? 'bg-slate-800 text-white shadow-lg scale-105'
                       : 'text-gray-700 hover:bg-gray-100 hover:text-black hover:-translate-y-0.5 hover:scale-105'
                   }`
                 }
@@ -103,7 +98,7 @@ export default function Header() {
                 className={({ isActive }) =>
                   `px-4 py-2 rounded-lg transition-all duration-300 ease-in-out transform hover:shadow-md ${
                     isActive
-                      ? 'bg-black text-white shadow-lg scale-105'
+                      ? 'bg-slate-800 text-white shadow-lg scale-105'
                       : 'text-gray-700 hover:bg-gray-100 hover:text-black hover:-translate-y-0.5 hover:scale-105'
                   }`
                 }
@@ -115,9 +110,9 @@ export default function Header() {
               {isAuthenticated && (
                 <DropdownMenu className='text-sm'>
                   <DropdownMenuTrigger>
-                    <CircleUserRound />
+                    <CircleUserRound className="stroke-slate-600"/>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className='absolute right-0 top-9 bg-white shadow-lg border rounded-lg px-2 text-center'>
+                  <DropdownMenuContent className='absolute right-0 top-9 bg-white shadow-lg border rounded-lg px-2 text-center text-slate-800'>
                     <DropdownMenuLabel className=''>Welcome, {userAccess === 'admin' ? 'Admin' : userAccess === 'team' ? 'Surgery Team Member' : null}!</DropdownMenuLabel>
                     <DropdownMenuGroup className="flex flex-col justify-center items-center px-2 pb-4 w-[160px]">
                       <DropdownMenuItem>
@@ -126,7 +121,7 @@ export default function Header() {
                               className={({ isActive }) =>
                                 `px-4 py-2 rounded-lg transition-all duration-300 ease-in-out transform hover:shadow-md ${
                                   isActive
-                                    ? 'bg-black text-white shadow-lg scale-105'
+                                    ? 'bg-slate-800 text-white shadow-md scale-105'
                                     : 'text-gray-700 hover:bg-gray-100 hover:text-black hover:-translate-y-0.5 hover:scale-105'
                                 }`
                               }
@@ -145,7 +140,6 @@ export default function Header() {
                             )}
                     </DropdownMenuItem>
                     </DropdownMenuGroup>
-                    
                   </DropdownMenuContent>
                 </DropdownMenu>
               )}
@@ -158,13 +152,13 @@ export default function Header() {
 
       <div className='customMd:hidden transition-opacity duration-300'>
         <Sheet>
-          <SheetTrigger className='text-gray-900 p-2 rounded-lg hover:bg-gray-100 transition-all duration-200 transform hover:scale-110'>
+          <SheetTrigger className='text-slate-800 p-2 rounded-lg hover:bg-gray-100 transition-all duration-200 transform hover:scale-110'>
             <Menu className='w-6 h-6 transition-transform duration-200 hover:rotate-90' />
           </SheetTrigger>
           <SheetContent
             side='right'
             hideClose
-            className='animate-in slide-in-from-right fade-in duration-500 ease-out'
+            className='animate-in slide-in-from-right fade-in duration-500 ease-out text-slate-800'
           >
             <div className='flex items-center justify-between px-4 pt-4 pb-2 border-b animate-in fade-in-50 slide-in-from-top-2 duration-400'>
               {' '}
