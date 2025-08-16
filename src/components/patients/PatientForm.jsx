@@ -58,9 +58,22 @@ export default function PatientForm() {
       .replace(/([a-z])([A-Z])/g, "$1 $2")
       .replace(/^\w/, (c) => c.toUpperCase());
 
-  // Generate a new patient ID when the component mounts - this ID is currently NOT unique - we may want to think about how to ensure uniqueness in the future.
+  // Generate a new patient ID when the component mounts - modified to check if generated ID is already in use and saved in localStorage
+
   useEffect(() => {
-    setPatientId(generatePatientID());
+    let patientsString = localStorage.getItem("patients")
+    let patients = {}
+    try {
+      patients = JSON.parse(patientsString) || {}
+    } catch (error) {
+      console.error("Failed to parse patients from localStorage:", error)
+      return
+    }
+    let newID = generatePatientID()
+    while (patients.hasOwnProperty(newID)) {
+      newID = generatePatientID()
+    }
+    setPatientId(newID)
   }, []);
 
   const validateForm = () => {
