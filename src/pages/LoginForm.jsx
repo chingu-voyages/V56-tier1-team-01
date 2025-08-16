@@ -74,9 +74,9 @@ export default function LoginForm() {
     }, [isAuthenticated, userAccess, navigate])
 
     return (
-        <main className="min-h-screen flex flex-col items-center justify-center">
-            <section className="max-w-xl w-full text-center border border-gray-200 p-8 rounded-lg shadow-md sm:p-10">
-                <p className="max-w-sm m-auto pt-10 pb-12">
+        <main className="flex flex-col items-center justify-center text-slate-800">
+            <section className="max-w-xl w-full text-center border border-slate-200 rounded-lg shadow-md p-6 md:p-4">
+                <p className="max-w-sm m-auto pt-6 pb-10">
                     To enter a new patient into this system or to update 
                     the status of an existing patient please enter your 
                     authentication information below. 
@@ -118,13 +118,13 @@ export default function LoginForm() {
                     {errors.password && (
                         <p className="text-sm text-red-500">{errors.password}</p>
                     )}
-                    <Button className="mt-8" type="submit">Authorize Login</Button>
+                    <Button className="mt-8 bg-slate-800" type="submit">Authorize Login</Button>
                 </form>
 
 
 
-                <p className="text-sm text-gray-500 mt-8">Looking for the status of a loved one?</p>
-                <p className="text-sm text-gray-500">Click <a className="underline" href="/patient-status">here</a> to view the patient status board.</p>
+                <p className="text-sm text-slate-500 mt-8">Looking for the status of a loved one?</p>
+                <p className="text-sm text-slate-00">Click <a className="underline" href="/patient-status">here</a> to view the patient status board.</p>
              </section>
         </main>
 

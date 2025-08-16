@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { PatientContext } from "@/context/PatientContext";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -11,7 +12,6 @@ import {
 } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { generatePatientID } from "./patientUtils";
-import { usePatients } from "@/context/usePatients";
 import { US_STATES } from "@/constants/usStates";
 import SearchBar from "@/components/layout/SearchBar";
 
@@ -19,7 +19,8 @@ import SearchBar from "@/components/layout/SearchBar";
 
 export default function PatientForm() {
   const [patientId, setPatientId] = useState("");
-  const { addPatient, removePatient, patients } = usePatients();
+  const { addPatient, updatePatient, removePatient, patients } =
+    useContext(PatientContext);
 
   const [formData, setFormData] = useState({
     status: "checkedIn",
@@ -28,7 +29,7 @@ export default function PatientForm() {
     address: "",
     city: "",
     state: "",
-    country: "United States",
+    country: "",
     phone: "",
     email: "",
   });
@@ -45,13 +46,20 @@ export default function PatientForm() {
       address: patient.address || "",
       city: patient.city || "",
       state: patient.state || "",
-      country: patient.country || "United States",
+      country: patient.country || "",
       phone: patient.phone || "",
       email: patient.email || "",
     });
   };
 
+  //prettify "checkedIn" -> "Checked In"
+  const toStatusLabel = (key = "") =>
+    key
+      .replace(/([a-z])([A-Z])/g, "$1 $2")
+      .replace(/^\w/, (c) => c.toUpperCase());
+
   // Generate a new patient ID when the component mounts - modified to check if generated ID is already in use and saved in localStorage
+
   useEffect(() => {
     let patientsString = localStorage.getItem("patients")
     let patients = {}
@@ -77,7 +85,8 @@ export default function PatientForm() {
     if (!formData.address.trim())
       newErrors.address = "Street address is required";
     if (!formData.city.trim()) newErrors.city = "City is required";
-    if (!formData.state.trim()) newErrors.state = "State is required";
+    if (!formData.state.trim())
+      newErrors.state = "State, region, or province is required";
     if (!formData.country.trim()) newErrors.country = "Country is required";
 
     if (!formData.email.trim()) {
@@ -111,12 +120,12 @@ export default function PatientForm() {
   }
 
   return (
-    <div className="bg-white shadow-md rounded-lg p-6 sm:p-8 max-w-lg sm:max-w-2xl w-full mx-auto">
-      <h2 className="text-xl font-bold mb-6 text-center">
+    <div className="bg-white shadow-md rounded-lg border border-slate-200 p-6 sm:p-8 max-w-lg sm:max-w-2xl w-full mx-auto text-slate-800">
+      <h2 className="text-2xl font-bold mb-6 text-center">
         Add or Update Patient Information
       </h2>
       <div className="mb-6">
-        <h3 className="text-lg font-normal text-center mb-2">
+        <h3 className="text-sm sm:text-lg font-normal text-center mb-2">
           Use the Search Bar below to find and update existing patient
           information
         </h3>
@@ -129,25 +138,36 @@ export default function PatientForm() {
 
           if (!validateForm()) return;
 
-          const updatedPatient = {
-            id: patientId,
-            ...formData,
+          const isEditing = !!selectedPatient;
+
+          // a payload bundles all the patient data to be added or updated
+          const payload = {
+            id: isEditing ? selectedPatient.id : patientId,
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            address: formData.address,
+            city: formData.city,
+            state: formData.state,
+            country: formData.country,
+            phone: formData.phone,
+            email: formData.email,
+            status: isEditing ? selectedPatient.status : "checkedIn",
           };
 
-          if (selectedPatient) {
-            addPatient(updatedPatient); 
+          if (isEditing) {
+            updatePatient(payload); // pass the full patient object and keep the ID
           } else {
-            addPatient(updatedPatient);
+            addPatient(payload);
           }
-
+          // Reset form after submission
           setFormData({
-            status: "Checked In",
+            status: selectedPatient ? selectedPatient.status : "checkedIn",
             firstName: "",
             lastName: "",
             address: "",
             city: "",
             state: "",
-            country: "United States",
+            country: "",
             phone: "",
             email: "",
           });
@@ -163,19 +183,30 @@ export default function PatientForm() {
 
         <div className="mb-4">
           <Label className="block mb-2">Current Status</Label>
-          <RadioGroup
-            name="status"
-            value={formData.status}
-            defaultValue="checkedIn"
-            onValueChange={(value) =>
-              setFormData({ ...formData, status: value })
-            }
-          >
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="checkedIn" id="checkedIn" />
-              <Label htmlFor="checkedIn">Checked In</Label>
-            </div>
-          </RadioGroup>
+
+          {selectedPatient ? (
+            <RadioGroup value="readonly" onValueChange={() => {}}>
+              <div className="flex items-center space-x-1">
+                <RadioGroupItem value="readonly" id="status-display" disabled />
+                <Label htmlFor="status-display">
+                  {toStatusLabel(selectedPatient.status)}
+                </Label>
+              </div>
+            </RadioGroup>
+          ) : (
+            <RadioGroup
+              name="status"
+              value={formData.status}
+              onValueChange={(value) =>
+                setFormData({ ...formData, status: value })
+              }
+            >
+              <div className="flex items-center space-x-1">
+                <RadioGroupItem value="checkedIn" id="checkedIn" />
+                <Label htmlFor="checkedIn">{toStatusLabel("checkedIn")}</Label>
+              </div>
+            </RadioGroup>
+          )}
         </div>
 
         <div className="mb-4">
@@ -241,25 +272,16 @@ export default function PatientForm() {
         </div>
 
         <div className="mb-4">
-          <Label htmlFor="state">State</Label>
-          <Select
+          <Label htmlFor="state">State, Province, or Region</Label>
+          <Input
+            id="state"
             name="state"
+            placeholder="New York"
             value={formData.state}
-            onValueChange={(value) =>
-              setFormData({ ...formData, state: value })
+            onChange={(e) =>
+              setFormData({ ...formData, state: e.target.value })
             }
-          >
-            <SelectTrigger id="state">
-              <SelectValue placeholder="Select State" />
-            </SelectTrigger>
-            <SelectContent>
-              {US_STATES.map((state) => (
-                <SelectItem key={state.code} value={state.code}>
-                  {state.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          />
           {errors.state && (
             <p className="text-sm text-red-500 mt-1">{errors.state}</p>
           )}
@@ -269,6 +291,8 @@ export default function PatientForm() {
           <Label htmlFor="country">Country</Label>
           <Input
             id="country"
+            name="country"
+            placeholder="United States"
             value={formData.country}
             onChange={(e) =>
               setFormData({ ...formData, country: e.target.value })
@@ -327,7 +351,7 @@ export default function PatientForm() {
                 address: "",
                 city: "",
                 state: "",
-                country: "United States",
+                country: "",
                 phone: "",
                 email: "",
               });
@@ -337,7 +361,7 @@ export default function PatientForm() {
           >
             Cancel
           </Button>
-          <Button type="submit">
+          <Button type="submit" className="bg-slate-800">
             {selectedPatient ? "Update Patient" : "Add New Patient"}
           </Button>
         </div>
