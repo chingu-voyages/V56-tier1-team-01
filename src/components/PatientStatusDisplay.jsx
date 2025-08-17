@@ -121,40 +121,39 @@ export default function PatientStatusDisplay() {
             })}
           </ul>
         </div>
-        {/* Refreshes patient list from localStorage*/}
-
-        <button
-          className="mb-2 px-3 py-1 rounded shadow-sm transition-colors bg-gray-400 text-white hover:bg-blue-700 hover:text-white"
-          onClick={() => {
-            // Start with context patients
-            let mergedPatients = Object.values(patients);
-
-            // Attempt to load any patients from localStorage
-            const patientsString = localStorage.getItem("patients");
-            if (patientsString) {
-              try {
-                const storedPatientsObj = JSON.parse(patientsString);
-                const storedPatients = Object.values(storedPatientsObj);
-
-                // Merge, giving priority to context patients
-                const map = {};
-                [...storedPatients, ...mergedPatients].forEach((p) => {
-                  map[p.id] = p;
-                });
-                mergedPatients = Object.values(map);
-              } catch {
-                // If parsing fails, just use context patients
-                mergedPatients = Object.values(patients);
-              }
-            }
-
-            setPatientCurrentStatus(mergedPatients);
-          }}
-        >
-          Refresh
-        </button>
-        {/* Pagination controls */}
         <div className="flex flex-col items-center justify-center mt-2">
+          {/* Refreshes patient list from localStorage */}
+          <button
+            className="mb-2 px-3 py-1 rounded shadow-sm transition-colors bg-gray-400 text-white hover:bg-blue-700 hover:text-white"
+            onClick={() => {
+              // Start with context patients
+              let mergedPatients = Object.values(patients);
+
+              // Attempt to load any patients from localStorage
+              const patientsString = localStorage.getItem("patients");
+              if (patientsString) {
+                try {
+                  const storedPatientsObj = JSON.parse(patientsString);
+                  const storedPatients = Object.values(storedPatientsObj);
+
+                  // Merge, giving priority to context patients
+                  const map = {};
+                  [...storedPatients, ...mergedPatients].forEach((p) => {
+                    map[p.id] = p;
+                  });
+                  mergedPatients = Object.values(map);
+                } catch {
+                  // If parsing fails, just use context patients
+                  mergedPatients = Object.values(patients);
+                }
+              }
+
+              setPatientCurrentStatus(mergedPatients);
+            }}
+          >
+            Refresh
+          </button>
+          {/* Pagination controls */}
           <span className="text-sm text-gray-500 mb-2">
             Page {currentPage + 1} of{" "}
             {Math.max(
@@ -168,8 +167,7 @@ export default function PatientStatusDisplay() {
               onClick={() => {
                 setCurrentPage((prev) =>
                   prev === 0
-                    ? Math.ceil(patientCurrentStatus.length / patientsPerPage) -
-                      1
+                    ? Math.ceil(patientCurrentStatus.length / patientsPerPage) - 1
                     : prev - 1
                 );
               }}
